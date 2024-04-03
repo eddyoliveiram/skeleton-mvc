@@ -1,92 +1,40 @@
 <?php
 namespace Controllers;
-use Models\ProfessorModel;
-use Models\UserModel;
 use Core\Controller;
-use Validators\Validator;
+use Models\UserModel;
+use Repositories\UserRepository;
+use Validators\UserValidator;
+use Services\PaginationService;
 
 class IndexController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
+    }
 
     public function index()
     {
         $userModel = new UserModel();
-
-        $users = $userModel->All();
-
-        $this->view('index', [
-            'users' => $users
-        ]);
-    }
-
-    public function id()
-    {
-//        $professorModel = new ProfessorModel();
-//        $validator = new Validator();
-//
-//        $data = [
-//            'id' => $_REQUEST['id']
-//        ];
-//
-//        $rules = [
-//            'id' => 'required'
-//        ];
-//
-//        if (!$validator->validate($data, $rules)) {
-//            echo "Errors found:<br>";
-//            $errors = $validator->getErrors();
-//            foreach ($errors as $field => $fieldErrors) {
-//                foreach ($fieldErrors as $error) {
-//                    echo "- {$error}<br>";
-//                }
-//            }
-//        }
-//
-//        $professors = $professorModel->getUserById($_REQUEST['id']);
-//
-//        $this->view('index', [
-//            'professors' => $professors
-//        ]);
+        $paginationService = new PaginationService();
+        $page = isset($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
+        $paginated = $paginationService->paginate('users',$page, 5);
+        $this->view('index');
     }
 
     public function store()
     {
-        $userModel = new UserModel();
-        $validator = new Validator();
+        $validator = new UserValidator($_REQUEST);
+        $userRepository = new UserRepository();
 
-        $nome = isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
-        $email = isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-
-        $data = [
-            'name' => $nome,
-            'email' => $email,
-            'remember_token' => 12313,
-            'password' => md5(12313),
-        ];
-
-        $rules = [
-            'name' => 'required',
-            'email' => 'required|email',
-            'remember_token' => 'required',
-            'password' => 'required'
-        ];
-
-
-        if (!$validator->validate($data, $rules)) {
-            $errors = $validator->getErrors();
-        }else{
-            $success = 'User created with success';
-            $userModel->insert($data);
+        if ($validator->validated) {
+            $userRepository->createUser($validator->validated);
+            $validator->setMessage('User created with success.');
         }
 
-        $users = $userModel->all();
-
-        $this->view('index', [
-            'users' => isset($users) ? $users : null,
-            'errors' => isset($errors) ? $errors : null,
-            'success' => isset($success) ? $success : null,
-            'old' => $_REQUEST
-        ]);
+        $this->redirect('/index/index');
     }
 
 }

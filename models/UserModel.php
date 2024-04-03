@@ -11,9 +11,18 @@ class UserModel
         $this->db = new Database();
     }
 
-    public function all() {
-        $this->db->query("SELECT * FROM users");
+    public function allPaginated($page = 1, $itemsPerPage = 15) {
+        $start = ($page - 1) * $itemsPerPage;
+        $this->db->query("SELECT * FROM users LIMIT :start, :itemsPerPage");
+        $this->db->bind(':start', $start, \PDO::PARAM_INT);
+        $this->db->bind(':itemsPerPage', $itemsPerPage, \PDO::PARAM_INT);
+
         return $this->db->resultSet();
+    }
+
+    public function getTotalUsers() {
+        $this->db->query("SELECT COUNT(*) as count FROM users");
+        return $this->db->single()['count'];
     }
 
     public function insert($data) {
@@ -33,5 +42,4 @@ class UserModel
             return false;
         }
     }
-
 }
