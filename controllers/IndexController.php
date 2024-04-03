@@ -1,7 +1,6 @@
 <?php
 namespace Controllers;
 use Core\Controller;
-use Models\ProfessorModel;
 use Models\UserModel;
 use Repositories\UserRepository;
 use Validators\UserValidator;
@@ -19,7 +18,7 @@ class IndexController extends Controller
     public function index()
     {
         $paginationService = new PaginationService(new UserRepository());
-        $paginationService->paginate('users', 5);
+        $paginationService->paginate('users',5);
         $this->view('index');
     }
 
@@ -28,9 +27,9 @@ class IndexController extends Controller
         $user = new UserModel();
         $validator = new UserValidator($_REQUEST);
 
-        if ($validator->validated) {
-            $user->insert($validator->validated);
-            $validator->setMessage('User created with success.');
+        if ($validator->validate()){
+            $user->insert($validator->getValidated());
+            $validator->addSuccessMessage('User created with success.');
         }
 
         $this->redirect('index', 'index');

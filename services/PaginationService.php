@@ -12,7 +12,7 @@ class PaginationService
         $this->repository = $repository;
     }
 
-    public function paginate($variableName = 'data', $itemsPerPage)
+    public function paginate($variableName = 'data', $itemsPerPage = 10)
     {
         $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
         $page = max($page, 1);

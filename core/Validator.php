@@ -1,42 +1,62 @@
 <?php
-
 namespace Core;
 
-class Validator extends BaseValidator
-{
-    protected $errors = [];
+class Validator {
+    protected $data = [];
+    protected $validated = [];
 
-    public function validate(array $data, array $rules)
-    {
-        foreach ($rules as $field => $rule) {
-            $rulesArray = explode('|', $rule);
-
-            foreach ($rulesArray as $singleRule) {
-                $this->applyRule($field, $singleRule, isset($data[$field]) ? $data[$field] : null);
-            }
-        }
-
-        return empty($_SESSION[$this->errorsKey]);
+    public function __construct($data) {
+        $this->data = $data;
     }
 
-    protected function applyRule($field, $rule, $value)
-    {
-        $parameters = [];
-        if (strpos($rule, ':') !== false) {
-            list($rule, $parameter) = explode(':', $rule, 2);
-            $parameters = explode(',', $parameter);
-        }
-
-        if ($rule === 'required') {
-            if ($value === null || $value === '') {
-                $this->addError($field, "O campo {$field} é obrigatório.");
-            }
-        } elseif ($rule === 'email') {
-            if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                $this->addError($field, "O campo {$field} deve ser um endereço de e-mail válido.");
+    public function validate() {
+        $isValid = true;
+        foreach ($this->rules() as $attribute => $rules) {
+            foreach ($rules as $rule) {
+                if (!$this->$rule($attribute)) {
+                    $isValid = false;
+                } else {
+                    $this->validated[$attribute] = $this->data[$attribute];
+                }
             }
         }
+        return $isValid;
+    }
 
+    public function getValidated() {
+        return $this->validated;
+    }
+
+    protected function required($attribute) {
+        if (empty($this->data[$attribute])) {
+            $this->addErrorMessage("{$attribute} is required.");
+            return false;
+        }
+        return true;
+    }
+
+    protected function email($attribute) {
+        if (!filter_var($this->data[$attribute], FILTER_VALIDATE_EMAIL)) {
+            $this->addErrorMessage("{$attribute} must be a valid email address.");
+            return false;
+        }
+        return true;
+    }
+
+    public function addErrorMessage($message) {
+        if (!isset($_SESSION['__ERRORS'])) {
+            $_SESSION['__ERRORS'] = [];
+        }
+        $_SESSION['__ERRORS'][] = ucfirst($message);
+    }
+
+    public function addSuccessMessage($message) {
+        $_SESSION['__SUCCESS'] = $message;
+    }
+
+    protected function rules() {
+        return [];
     }
 }
+
 ?>
