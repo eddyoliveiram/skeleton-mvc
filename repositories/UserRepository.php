@@ -1,9 +1,9 @@
 <?php
 namespace Repositories;
-use Core\IRepository;
+use Core\Repository;
 use Models\UserModel;
 
-class UserRepository implements IRepository
+class UserRepository extends Repository
 {
     protected $userModel;
 

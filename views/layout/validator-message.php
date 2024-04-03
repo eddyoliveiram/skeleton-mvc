@@ -14,10 +14,5 @@
         <?=$_SESSION['__SUCCESS'];?>
     </div>
     <?php unset($_SESSION['__SUCCESS']); ?>
-    <?php
-//    $keys = array_keys($old);
-//    foreach ($keys as $key) {
-//        $old[$key] = null;
-//    }
-    ?>
+    <?php unset($_SESSION['__OLD']);?>
 <?}?>

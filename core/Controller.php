@@ -19,9 +19,9 @@ class Controller {
         require_once __DIR__ . '/../views/' . $view . '.php';
     }
 
-    public function redirect($path) {
+    public function redirect($controller, $method) {
 //        echo '<pre>';print_r(BASE_PATH);die();
-        header('Location: ' . BASE_PATH.$path);
+        header('Location: ' . BASE_PATH.'/'.$controller.'/'.$method);
         exit;
     }
 }

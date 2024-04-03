@@ -1,26 +1,14 @@
 <?php
 namespace Models;
 
-use Core\Database;
+use Core\Model;
 
-class ProfessorModel
+class ProfessorModel extends Model
 {
-    private $db;
+    protected $table = 'professors';
 
     public function __construct() {
-        $this->db = new Database();
+        parent::__construct($this->table);
     }
 
-    public function getById($id) {
-
-        $this->db->query("SELECT * FROM professors WHERE id = :id");
-        $this->db->bind(':id', $id);
-
-        return $this->db->single();
-    }
-
-    public function all() {
-        $this->db->query("SELECT * FROM professors");
-        return $this->db->resultSet();
-    }
 }

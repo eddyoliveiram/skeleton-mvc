@@ -1,6 +1,7 @@
 <?php
-
+//echo '<pre>';print_r($_SESSION['__LAST_QUERIES']);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -49,11 +50,11 @@
                         <form method="POST" action="<?=BASE_PATH;?>/index/store">
                             <div class="form-group">
                                 <label for="nome">Name:</label>
-                                <input type="text" class="form-control" id="name" name="name" value="<?=$_SESSION['__OLD']['name'];?>">
+                                <input type="text" class="form-control" id="name" name="name" value="<?=isset($_SESSION['__OLD']['name'])? $_SESSION['__OLD']['name'] : null;?>">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="text" class="form-control" id="email" name="email" value="<?=$_SESSION['__OLD']['email'];?>">
+                                <input type="text" class="form-control" id="email" name="email" value="<?=isset($_SESSION['__OLD']['email'])? $_SESSION['__OLD']['email'] : null;?>">
                             </div>
                             <button type="submit" class="btn btn-primary">Send</button>
                         </form>

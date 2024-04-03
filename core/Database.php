@@ -1,18 +1,21 @@
 <?php
 namespace Core;
-
+$_SESSION['__LAST_QUERIES'] = [];
 use PDO;
 use PDOException;
 
 class Database {
-    private $host = 'localhost';
-    private $user = 'root';
-    private $pass = '';
-    private $dbname = 'mrlp';
 
-    private $dbh;
-    private $stmt;
-    private $error;
+    protected $host = 'localhost';
+    protected $user = 'root';
+    protected $pass = '';
+    protected $dbname = 'mrlp';
+
+    protected $dbh;
+    protected $stmt;
+    protected $error;
+    protected $lastQuery;
+    protected $currentBinds = [];
 
     public function __construct() {
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
@@ -29,9 +32,26 @@ class Database {
         }
     }
 
+    private function rebuildQueryWithRealValues($query, $binds) {
+        foreach ($binds as $param => $value) {
+            if (is_string($value)) {
+                $value = "'" . addslashes($value) . "'";
+            } elseif (is_null($value)) {
+                $value = 'NULL';
+            } elseif (is_bool($value)) {
+                $value = $value ? 'TRUE' : 'FALSE';
+            }
+            $query = str_replace($param, $value, $query);
+        }
+        return $query;
+    }
+
     public function query($sql) {
         $this->stmt = $this->dbh->prepare($sql);
+        $this->lastQuery = $sql;
+        $this->currentBinds = [];
     }
+
 
     public function bind($param, $value, $type = null) {
         if (is_null($type)) {
@@ -50,10 +70,15 @@ class Database {
             }
         }
         $this->stmt->bindValue($param, $value, $type);
+        $this->currentBinds[$param] = $value;
     }
 
     public function execute() {
-        return $this->stmt->execute();
+        $result = $this->stmt->execute();
+        $rebuiltQuery = $this->rebuildQueryWithRealValues($this->lastQuery, $this->currentBinds);
+        $_SESSION['__LAST_QUERIES'][rand(1,50)] = $rebuiltQuery;
+        $this->currentBinds = [];
+        return $result;
     }
 
     public function single() {
