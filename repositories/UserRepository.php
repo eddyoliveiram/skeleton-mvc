@@ -1,9 +1,9 @@
 <?php
 namespace Repositories;
-
+use Core\IRepository;
 use Models\UserModel;
 
-class UserRepository
+class UserRepository implements IRepository
 {
     protected $userModel;
 
@@ -12,12 +12,12 @@ class UserRepository
         $this->userModel = new UserModel();
     }
 
-    public function getAllUsers($page = 1, $itemsPerPage = 15)
+    public function getAll($page = 1, $itemsPerPage = 15)
     {
         return $this->userModel->allPaginated($page, $itemsPerPage);
     }
 
-    public function getTotalUsers()
+    public function getTotal()
     {
         return $this->userModel->getTotalUsers();
     }

@@ -1,21 +1,24 @@
 <?php
 namespace Services;
 
-use Repositories\UserRepository;
+use Core\IRepository;
 
 class PaginationService
 {
-    protected $userRepository;
+    protected $repository;
 
-    public function __construct()
+    public function __construct(IRepository $repository)
     {
-        $this->userRepository = new UserRepository();
+        $this->repository = $repository;
     }
 
-    public function paginate($array_name = 'data', $page, $itemsPerPage)
+    public function paginate($array_name = 'data', $itemsPerPage)
     {
-        $data = $this->userRepository->getAllUsers($page, $itemsPerPage);
-        $totalUsers = $this->userRepository->getTotalUsers();
+        $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
+        $page = max($page, 1);
+
+        $data = $this->repository->getAll($page, $itemsPerPage);
+        $totalUsers = $this->repository->getTotal();
         $totalPages = ceil($totalUsers / $itemsPerPage);
 
         $_SESSION['pagination'] = [

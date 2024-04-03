@@ -1,7 +1,6 @@
 <?php
 namespace Controllers;
 use Core\Controller;
-use Models\UserModel;
 use Repositories\UserRepository;
 use Validators\UserValidator;
 use Services\PaginationService;
@@ -17,10 +16,8 @@ class IndexController extends Controller
 
     public function index()
     {
-        $userModel = new UserModel();
-        $paginationService = new PaginationService();
-        $page = isset($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
-        $paginated = $paginationService->paginate('users',$page, 5);
+        $paginationService = new PaginationService(new UserRepository());
+        $paginationService->paginate('users', 5);
         $this->view('index');
     }
 
