@@ -1,6 +1,7 @@
+<?php
+namespace Controllers;
 
-<?php 
-require_once '../core/Controller.php';
+use Core\Controller;
 
 class AboutController extends Controller {
     public function index() {

@@ -1,0 +1,21 @@
+{
+    "name": "eddy-oliveira/mvc-skeleton",
+    "description": "A simple MVC skeleton for PHP projects",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Eddy Mesquita",
+            "email": "eddy.mesquita@seduc.pa.gov.br"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "Models\\": "models/",
+            "Controllers\\": "controllers/",
+            "Validators\\": "validators/"
+        }
+    }
+}

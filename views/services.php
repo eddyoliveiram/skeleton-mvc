@@ -5,6 +5,7 @@
 </head>
 <body>
 <h1>SERVICES</h1>
-<?require_once ("layout/menu.php")?>
+<?
+require_once("layout/navbar.php") ?>
 </body>
 </html>

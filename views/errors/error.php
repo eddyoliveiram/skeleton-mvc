@@ -24,8 +24,8 @@
         }
         .error-details {
             margin-top: 16px;
-            font-size: 1.2em;
-            color: #333;
+            font-size: 1.5em;
+            /*color: #333;*/
         }
     </style>
 </head>

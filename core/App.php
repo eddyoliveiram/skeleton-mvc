@@ -1,4 +1,6 @@
 <?php
+namespace Core;
+
 class App {
     private static $instance;
     protected $controller = '';
@@ -18,15 +20,15 @@ class App {
             unset($url[0]);
         }else {
             if($url[0] == ''){
-                $msg = "No <b style='color: #e67300;'>Controller</b> was provided in the url.";
+                $msg = "No <b style='color: #e67300;'>{ Controller }</b> was provided in the url.";
             }else{
-                $msg = "<b style='color: #e67300;'>'{$controllerName}'</b> was not found";
+                $msg = "<b style='color: #e67300;'>{$controllerName}</b> was not found";
             }
             $this->loadError($msg);
         }
 
-        require_once '../controllers/' . $this->controller . '.php';
-        $this->controller = new $this->controller;
+        $controllerClassName = '\\Controllers\\' . $this->controller;
+        $this->controller = new $controllerClassName();
 
         if (isset($url[1])) {
             if (method_exists($this->controller, $url[1])) {
@@ -34,7 +36,7 @@ class App {
                 unset($url[1]);
             }
         }else {
-            $msg = "No<b style='color: #e67300;'> method</b> was not provided in the url.";
+            $msg = "No<b style='color: #e67300;'> { Method }</b> was not provided in the url.";
             $this->loadError($msg);
         }
 
@@ -48,7 +50,13 @@ class App {
 
     protected function setGlobals() {
         $basePath = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $pathParts = explode('/', $_SERVER['PHP_SELF'], -1);
+        $rootFolder = $pathParts[1];
+        $viewPath = __DIR__ . '/../views/';
+
         define('BASE_PATH', $basePath);
+        define('ROOT_PATH', $rootFolder);
+        define('VIEW_PATH', $viewPath);
     }
 
     public static function getInstance() {
