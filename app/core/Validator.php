@@ -1,5 +1,5 @@
 <?php
-namespace Core;
+namespace App\Core;
 
 class Validator {
     protected $data = [];

@@ -1,7 +1,7 @@
 <?php
-namespace Services;
+namespace App\Services;
 
-use Core\Repository;
+use App\core\Repository;
 
 class PaginationService
 {

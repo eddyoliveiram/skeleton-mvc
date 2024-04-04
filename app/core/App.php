@@ -29,7 +29,7 @@ class App {
             $this->loadError($msg);
         }
 
-        $controllerClassName = '\\Controllers\\' . $this->controller;
+        $controllerClassName = 'App\\Controllers\\' . $this->controller;
         $this->controller = new $controllerClassName();
 
         if (isset($url[1])) {

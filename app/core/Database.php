@@ -1,5 +1,5 @@
 <?php
-namespace Core;
+namespace App\Core;
 $_SESSION['__LAST_QUERIES'] = [];
 use PDO;
 use PDOException;

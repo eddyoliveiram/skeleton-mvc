@@ -1,7 +1,7 @@
 <?php
-namespace Models;
-use Core\Database;
-use Core\Model;
+namespace App\Models;
+use App\core\Database;
+use App\core\Model;
 
 class UsuarioModel extends Model
 {

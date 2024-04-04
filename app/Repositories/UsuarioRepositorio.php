@@ -1,8 +1,7 @@
 <?php
-namespace Repositories;
-
-use Core\Repository;
-use Models\UsuarioModel;
+namespace App\Repositories;
+use App\Core\Repository;
+use App\Models\UsuarioModel;
 
 class UsuarioRepositorio extends Repository
 {

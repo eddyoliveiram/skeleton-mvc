@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace App\Core;
 
 abstract class Repository {
     abstract public function getAll($page, $itemsPerPage);
