@@ -9,6 +9,8 @@ class App {
 
     public function __construct() {
 
+        $this->ExceptionHandler(TRUE);
+
         $this->setGlobals();
 
         $url = $this->parseUrl();
@@ -75,6 +77,22 @@ class App {
     private function loadError($message) {
         require_once '../views/errors/error.php';
         die();
+    }
+
+    private function ExceptionHandler($boolean)
+    {
+        if($boolean) {
+            set_exception_handler(function ($exception) {
+                $isDevEnv = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
+
+                $errorMessage = $exception->getMessage();
+                $errorFile = $exception->getFile();
+                $errorLine = $exception->getLine();
+                $showDetails = $isDevEnv;
+                include VIEW_PATH.'/errors/error_exception.php';
+                exit;
+            });
+        }
     }
 
 }
