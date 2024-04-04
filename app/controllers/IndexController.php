@@ -1,10 +1,10 @@
 <?php
-namespace Controllers;
-use Core\Controller;
-use Models\UsuarioModel;
-use Repositories\UsuarioRepositorio;
-use Validators\UsuarioValidacao;
-use Services\PaginationService;
+namespace App\Controllers;
+use App\Models\UsuarioModel;
+use App\Repositories\UsuarioRepositorio;
+use App\Core\Controller;
+use App\Validators\UsuarioValidacao;
+use App\Services\PaginationService;
 
 class IndexController extends Controller
 {
