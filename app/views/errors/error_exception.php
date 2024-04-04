@@ -6,7 +6,7 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         .error-container { text-align: center; }
-        .details { margin-top: 20px; text-align: left; display: inline-block; text-align: left; }
+        .details { margin-top: 20px; text-align: left; display: inline-block;}
         .details strong { font-size: 16px; }
         .details div { margin-bottom: 10px; }
     </style>
