@@ -1,8 +1,8 @@
 <?php
 namespace Models;
 
-use Core\Database;
-use Core\Model;
+use App\core\Database;
+use App\core\Model;
 
 class ProfessorModel extends Model
 {

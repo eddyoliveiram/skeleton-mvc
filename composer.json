@@ -12,12 +12,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Core\\": "core/",
-            "Models\\": "models/",
-            "Controllers\\": "controllers/",
-            "Validators\\": "validators/",
-            "Repositories\\": "repositories/",
-            "Services\\": "services/"
+            "App\\": "app/",
+            "Core\\": "app/core/",
+            "Models\\": "app/models/",
+            "Controllers\\": "app/controllers/",
+            "Validators\\": "app/validators/",
+            "Repositories\\": "app/repositories/",
+            "Services\\": "app/services/"
         }
     }
 }

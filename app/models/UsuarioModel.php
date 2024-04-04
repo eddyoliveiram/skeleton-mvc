@@ -1,10 +1,9 @@
 <?php
 namespace Models;
-
 use Core\Database;
 use Core\Model;
 
-class UserModel extends Model
+class UsuarioModel extends Model
 {
     protected $table = 'users';
 

@@ -3,7 +3,7 @@ namespace Validators;
 
 use Core\Validator;
 
-class UserValidator extends Validator {
+class UsuarioValidacao extends Validator {
 
     protected function rules() {
         return [

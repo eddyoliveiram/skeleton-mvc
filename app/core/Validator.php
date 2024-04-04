@@ -29,7 +29,7 @@ class Validator {
 
     protected function required($attribute) {
         if (empty($this->data[$attribute])) {
-            $this->addErrorMessage("{$attribute} is required.");
+            $this->addErrorMessage("{$attribute} é obrigatório.");
             return false;
         }
         return true;
@@ -37,7 +37,7 @@ class Validator {
 
     protected function email($attribute) {
         if (!filter_var($this->data[$attribute], FILTER_VALIDATE_EMAIL)) {
-            $this->addErrorMessage("{$attribute} must be a valid email address.");
+            $this->addErrorMessage("{$attribute} precisa ser um email válido.");
             return false;
         }
         return true;

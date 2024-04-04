@@ -1,7 +1,7 @@
 <?php
 namespace App\dto;
 
-class UserDataDTO
+class UsuarioDataDTO
 {
     public $users;
     public $title;

@@ -1,5 +1,5 @@
 <?php
-namespace Core;
+namespace App\Core;
 
 class App {
     private static $instance;
@@ -54,7 +54,7 @@ class App {
         $basePath = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
         $pathParts = explode('/', $_SERVER['PHP_SELF'], -1);
         $rootFolder = $pathParts[1];
-        $viewPath = __DIR__ . '/../views/';
+        $viewPath = __DIR__.'/../views/';
 
         define('BASE_PATH', $basePath);
         define('ROOT_PATH', $rootFolder);
@@ -75,7 +75,7 @@ class App {
     }
 
     private function loadError($message) {
-        require_once '../views/errors/error.php';
+        require_once '../views/errors/error_url.php';
         die();
     }
 

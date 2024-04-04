@@ -1,15 +1,16 @@
 <?php
 namespace Repositories;
-use Core\Repository;
-use Models\UserModel;
 
-class UserRepository extends Repository
+use Core\Repository;
+use Models\UsuarioModel;
+
+class UsuarioRepositorio extends Repository
 {
     protected $userModel;
 
     public function __construct()
     {
-        $this->userModel = new UserModel();
+        $this->userModel = new UsuarioModel();
     }
 
     public function getAll($page = 1, $itemsPerPage = 15)
