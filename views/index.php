@@ -17,7 +17,7 @@
     <div class="container">
     </div>
     <h1>INDEX</h1>
-    <table class="table">
+    <table class="table" style="background-color: white">
         <thead>
         <tr>
             <th>#</th>

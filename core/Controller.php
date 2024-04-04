@@ -24,5 +24,21 @@ class Controller {
         header('Location: ' . BASE_PATH.'/'.$controller.'/'.$method);
         exit;
     }
+
+    public function nest($primaryArray, $secondaryArray, $primaryKey, $foreignKey, $attachKey) {
+        $itemsByForeignKey = [];
+        foreach ($secondaryArray as $item) {
+            $itemsByForeignKey[$item[$foreignKey]][] = $item;
+        }
+
+        foreach ($primaryArray as &$primaryItem) {
+            $keyValue = $primaryItem[$primaryKey];
+            $primaryItem[$attachKey] = isset($itemsByForeignKey[$keyValue]) ? $itemsByForeignKey[$keyValue] : [];
+        }
+        unset($primaryItem);
+
+        return $primaryArray;
+    }
+
 }
 ?>
