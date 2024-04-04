@@ -1,5 +1,5 @@
 <?php
-namespace App\Core;
+namespace App\Core\Basic;
 
 class Controller {
     public function model($model) {
@@ -16,12 +16,12 @@ class Controller {
             $_SESSION['__OLD'] = null;
         }
 //        $old = isset($old) ? $old : null;
-        require_once __DIR__.'/../views/'. $view . '.php';
+        require_once VIEW_PATH.'/'. $view . '.php';
     }
 
     public function redirect($controller, $method) {
-//        echo '<pre>';print_r(BASE_PATH);die();
-        header('Location: ' . BASE_PATH.'/'.$controller.'/'.$method);
+//        echo '<pre>';print_r(PUBLIC_PATH);die();
+        header('Location: ' . PUBLIC_PATH.'/'.$controller.'/'.$method);
         exit;
     }
 

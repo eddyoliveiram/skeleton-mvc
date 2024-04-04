@@ -51,14 +51,18 @@ class App {
     }
 
     protected function setGlobals() {
-        $basePath = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $public_path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
         $pathParts = explode('/', $_SERVER['PHP_SELF'], -1);
         $rootFolder = $pathParts[1];
-        $viewPath = __DIR__.'/../views/';
+        $view_path = __DIR__.'/../views';
+        $core_path = __DIR__.'/../Core';
 
-        define('BASE_PATH', $basePath);
-        define('ROOT_PATH', $rootFolder);
-        define('VIEW_PATH', $viewPath);
+        define('ROOT_FOLDER', $rootFolder);
+        define('PUBLIC_PATH', $public_path);
+        define('CORE_PATH', $core_path);
+        define('VIEW_PATH', $view_path);
+
+//        echo '<pre>';print_r($basePath. ' x '.$rootFolder.' x '.$viewPath);die();
     }
 
     public static function getInstance() {
@@ -75,7 +79,8 @@ class App {
     }
 
     private function loadError($message) {
-        require_once '../views/errors/error_url.php';
+//        require_once '../views/errors/error_url.php';
+        include CORE_PATH.'/Notifications/Errors/error_url.php';
         die();
     }
 
@@ -89,7 +94,7 @@ class App {
                 $errorFile = $exception->getFile();
                 $errorLine = $exception->getLine();
                 $showDetails = $isDevEnv;
-                include VIEW_PATH.'/errors/error_exception.php';
+                include CORE_PATH.'/errors/error_exception.php';
                 exit;
             });
         }

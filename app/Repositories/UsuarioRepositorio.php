@@ -1,32 +1,31 @@
 <?php
 namespace App\Repositories;
-use App\Core\Repository;
-use App\Models\UsuarioModel;
+use App\Core\Basic\Model;
+use App\Core\Contracts\DataRepositoryInterface;
 
-class UsuarioRepositorio extends Repository
+class UsuarioRepositorio implements DataRepositoryInterface
 {
-    protected $userModel;
+    protected $model;
 
-    public function __construct()
+    public function __construct(Model $model)
     {
-        $this->userModel = new UsuarioModel();
+        $this->model = $model;
     }
 
     public function getAll($page = 1, $itemsPerPage = 15)
     {
-        return $this->userModel->allPaginated($page, $itemsPerPage);
+        return $this->model->allPaginated($page, $itemsPerPage);
     }
 
     public function getTotal()
     {
-        return $this->userModel->getTotalUsers();
+        return $this->model->getTotal();
     }
 
-    public function createUser(array $userData)
+    public function create(array $userData)
     {
-        return $this->userModel->insert($userData);
+        return $this->model->insert($userData);
     }
-
 
 }
 

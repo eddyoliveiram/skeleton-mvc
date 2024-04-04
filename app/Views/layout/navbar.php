@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="<?=BASE_PATH;?>/index/index">Index <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="<?=PUBLIC_PATH;?>/index/index">Index <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_PATH;?>/about/index">About</a>
+                <a class="nav-link" href="<?=PUBLIC_PATH;?>/about/index">About</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

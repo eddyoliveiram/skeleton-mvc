@@ -1,7 +1,6 @@
 <?php
 //echo '<pre>';print_r($_SESSION['__LAST_QUERIES']);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -47,7 +46,7 @@
                         <h5 class="card-title">Form</h5>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="<?=BASE_PATH;?>/index/store">
+                        <form method="POST" action="<?=PUBLIC_PATH;?>/index/store">
                             <div class="form-group">
                                 <label for="nome">Name:</label>
                                 <input type="text" class="form-control" id="name" name="name" value="<?=isset($_SESSION['__OLD']['name'])? $_SESSION['__OLD']['name'] : null;?>">

@@ -1,13 +1,13 @@
 <?php
 namespace App\Services;
 
-use App\core\Repository;
+use App\Core\Contracts\DataRepositoryInterface;
 
 class PaginationService
 {
     protected $repository;
 
-    public function __construct(Repository $repository)
+    public function __construct(DataRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

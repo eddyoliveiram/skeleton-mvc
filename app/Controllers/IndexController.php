@@ -1,24 +1,30 @@
 <?php
 namespace App\Controllers;
+use App\Core\Basic\Controller;
+use App\Models\ProfessorModel;
 use App\Models\UsuarioModel;
 use App\Repositories\UsuarioRepositorio;
-use App\Core\Controller;
-use App\Validators\UsuarioValidacao;
 use App\Services\PaginationService;
+use App\Validators\UsuarioValidacao;
 
 class IndexController extends Controller
 {
     protected $userRepository;
+    protected $usuarioModel;
+    private $professorModel;
 
     public function __construct()
     {
-        $this->userRepository = new UsuarioRepositorio();
+        $this->usuarioModel = new UsuarioModel();
+        $this->professorModel = new ProfessorModel();
+        $this->userRepository = new UsuarioRepositorio($this->usuarioModel);
     }
 
     public function index()
     {
-        $paginationService = new PaginationService(new UsuarioRepositorio());
-        $paginationService->paginate('users',5);
+//        echo '<pre>';print_r($this->usuarioModel->first());die();
+        $paginationService = new PaginationService($this->userRepository);
+        $paginationService->paginate('users', 5);
         $this->view('index');
     }
 
