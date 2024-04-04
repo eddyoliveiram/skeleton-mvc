@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Core\Contracts\DataRepositoryInterface;
+use App\Contracts\DataRepositoryInterface;
 
 class PaginationService
 {

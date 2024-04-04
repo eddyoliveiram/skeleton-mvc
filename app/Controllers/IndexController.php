@@ -22,7 +22,7 @@ class IndexController extends Controller
 
     public function index()
     {
-//        echo '<pre>';print_r($this->usuarioModel->first());die();
+        echo '<pre>';print_r($this->usuarioModel->first());die();
         $paginationService = new PaginationService($this->userRepository);
         $paginationService->paginate('users', 5);
         $this->view('index');

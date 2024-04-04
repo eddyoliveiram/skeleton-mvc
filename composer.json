@@ -8,13 +8,23 @@
             "email": "eddy.mesquita@seduc.pa.gov.br"
         }
     ],
+    "config": {
+        "platform": {
+            "php": "5.6.40"
+        }
+    },
     "require": {
       "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
             "App\\": "app/"
-        }
-
+        },
+        "_comment": "O classmap abaixo consegue carregar as classes legado da intranet.",
+        "classmap": [
+            "../../classes/class.Conexao.php",
+            "../../classes/class.ConexaoOra.php",
+            "../../classes/class.Protecao.php"
+        ]
     }
 }

@@ -13,11 +13,11 @@ class MySQLConnection implements DatabaseInterface {
     private $password = '';
     private $dbname = 'mrlp';
 
-    public function __construct($server = "Blank") {
-        $this->connect($server);
+    public function __construct() {
+        $this->connect();
     }
 
-    function connect($server) {
+    function connect() {
 
         $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
 

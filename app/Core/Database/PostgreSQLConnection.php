@@ -8,15 +8,22 @@ class PostgreSQLConnection implements DatabaseInterface {
     private $dbh;
     private $stmt;
 
-    public function __construct($server = "Producao") {
-        $this->connect($server);
+    public function __construct() {
+        $this->connect();
     }
 
-    function connect($server) {
-        return false;
+    function connect() {
+
+        $config = require __DIR__.'/../../../db_config.php';
+        $banco = $_SESSION['__BANCO_INTRANET'];
+        $postgreSQL =  $config['PostgreSQL'][$banco];
+
+        if (!isset($postgreSQL)) {
+            throw new \Exception("Configuração de banco de dados PostgreSQL não encontrada.");
+        }
 
         try {
-            $this->dbh = new PDO($dsn, $user, $pass);
+            $this->dbh = new PDO($postgreSQL['dsn'], $postgreSQL['user'], $postgreSQL['pass']);
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw new \Exception("Connection failed: " . $e->getMessage());

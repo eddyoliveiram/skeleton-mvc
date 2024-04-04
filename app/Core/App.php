@@ -61,7 +61,6 @@ class App {
         define('PUBLIC_PATH', $public_path);
         define('CORE_PATH', $core_path);
         define('VIEW_PATH', $view_path);
-
 //        echo '<pre>';print_r($basePath. ' x '.$rootFolder.' x '.$viewPath);die();
     }
 
@@ -94,7 +93,7 @@ class App {
                 $errorFile = $exception->getFile();
                 $errorLine = $exception->getLine();
                 $showDetails = $isDevEnv;
-                include CORE_PATH.'/errors/error_exception.php';
+                include CORE_PATH.'/Notifications/Errors/error_exception.php';
                 exit;
             });
         }

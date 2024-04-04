@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
+use App\Contracts\DataRepositoryInterface;
 use App\Core\Basic\Model;
-use App\Core\Contracts\DataRepositoryInterface;
 
 class UsuarioRepositorio implements DataRepositoryInterface
 {

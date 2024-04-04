@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Contracts;
+namespace App\Contracts;
 
 interface DataRepositoryInterface {
     public function getAll($page, $itemsPerPage);
