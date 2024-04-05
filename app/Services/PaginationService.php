@@ -18,10 +18,10 @@ class PaginationService
         $page = max($page, 1);
 
         $data = $this->repository->getAll($page, $itemsPerPage);
-        $totalUsers = $this->repository->getTotal();
+        $totalUsers = $this->repository->countAll();
         $totalPages = ceil($totalUsers / $itemsPerPage);
 
-        $_SESSION['pagination'] = [
+        $_SESSION['__PAGINATION'] = [
             $variableName => $data,
             'totalPages' => $totalPages,
             'currentPage' => $page,

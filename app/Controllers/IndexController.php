@@ -11,7 +11,6 @@ class IndexController extends Controller
 {
     protected $userRepository;
     protected $usuarioModel;
-    private $professorModel;
 
     public function __construct()
     {
@@ -22,7 +21,8 @@ class IndexController extends Controller
 
     public function index()
     {
-        echo '<pre>';print_r($this->usuarioModel->first());die();
+//        echo '<pre>';print_r($this->usuarioModel->countAll());die();
+
         $paginationService = new PaginationService($this->userRepository);
         $paginationService->paginate('users', 5);
         $this->view('index');

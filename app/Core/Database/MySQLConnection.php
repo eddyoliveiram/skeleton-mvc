@@ -12,9 +12,17 @@ class MySQLConnection implements DatabaseInterface {
     private $user = "root";
     private $password = '';
     private $dbname = 'mrlp';
+    private static $instance = null;
 
-    public function __construct() {
+    private function __construct() {
         $this->connect();
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     function connect() {

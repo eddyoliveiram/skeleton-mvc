@@ -20,6 +20,9 @@ class Validator {
                 }
             }
         }
+        if(!$isValid){
+            $_SESSION['__OLD'] = $this->data;
+        }
         return $isValid;
     }
 
@@ -38,6 +41,18 @@ class Validator {
     protected function email($attribute) {
         if (!filter_var($this->data[$attribute], FILTER_VALIDATE_EMAIL)) {
             $this->addErrorMessage("{$attribute} precisa ser um email válido.");
+            return false;
+        }
+        return true;
+    }
+
+    protected function nullable($attribute) {
+        return true;
+    }
+
+    protected function numeric($attribute) {
+        if (isset($this->data[$attribute]) && !is_numeric($this->data[$attribute])) {
+            $this->addErrorMessage("{$attribute} precisa ser numérico.");
             return false;
         }
         return true;

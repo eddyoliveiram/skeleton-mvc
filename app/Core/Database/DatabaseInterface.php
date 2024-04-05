@@ -9,6 +9,7 @@ interface DatabaseInterface {
     public function execute();
     public function single();
     public function resultSet();
+    public static function getInstance();
 
     public function getPaginationQuery($table, $page, $itemsPerPage);
 }

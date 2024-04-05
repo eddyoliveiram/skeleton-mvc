@@ -17,15 +17,25 @@ class UsuarioRepositorio implements DataRepositoryInterface
         return $this->model->allPaginated($page, $itemsPerPage);
     }
 
-    public function getTotal()
+    public function countAll()
     {
-        return $this->model->getTotal();
+        return $this->model->countAll();
     }
 
     public function create(array $userData)
     {
         return $this->model->insert($userData);
     }
+//
+//    public function update(array $userData, $id)
+//    {
+//        return $this->model->update($userData);
+//    }
+
+//    public function update(array $userData, $id)
+//    {
+//        return $this->model->update($userData);
+//    }
 
 }
 

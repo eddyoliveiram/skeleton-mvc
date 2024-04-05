@@ -6,11 +6,19 @@ use PDO;
 use PDOException;
 
 class OracleConnection implements DatabaseInterface {
+    private static $instance = null;
     private $dbh;
     private $stmt;
 
-    public function __construct() {
+    private function __construct() {
         $this->connect();
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     function connect() {

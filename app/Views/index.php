@@ -1,5 +1,5 @@
 <?php
-//echo '<pre>';print_r($_SESSION['__LAST_QUERIES']);
+echo '<pre>';print_r($_SESSION['__OLD']);echo '</pre>';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -26,13 +26,13 @@
         </tr>
         </thead>
         <tbody>
-        <?if(isset($_SESSION['pagination']['users']))
-            foreach ($_SESSION['pagination']['users'] as $user){?>
+        <?if(isset($_SESSION['__PAGINATION']['users']))
+            foreach ($_SESSION['__PAGINATION']['users'] as $user){?>
             <tr>
-                <td><?=$user['id']?></td>
-                <td><?=$user['name']?></td>
-                <td><?=$user['remember_token']?></td>
-                <td><?=$user['email']?></td>
+                <td><?=$user['cd_inscricao']?></td>
+                <td><?=$user['nome']?></td>
+                <td><?=$user['dt_nascimento']?></td>
+                <td><?=$user['rg']?></td>
             </tr>
         <? }?>
         </tbody>
@@ -49,11 +49,11 @@
                         <form method="POST" action="<?=PUBLIC_PATH;?>/index/store">
                             <div class="form-group">
                                 <label for="nome">Name:</label>
-                                <input type="text" class="form-control" id="name" name="name" value="<?=isset($_SESSION['__OLD']['name'])? $_SESSION['__OLD']['name'] : null;?>">
+                                <input type="text" class="form-control" id="nome" name="nome" value="<?=isset($_SESSION['__OLD']['nome'])? $_SESSION['__OLD']['nome'] : null;?>">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="text" class="form-control" id="email" name="email" value="<?=isset($_SESSION['__OLD']['email'])? $_SESSION['__OLD']['email'] : null;?>">
+                                <label for="cpf">Cpf:</label>
+                                <input type="number" class="form-control" id="cpf" name="cpf" value="<?=isset($_SESSION['__OLD']['cpf'])? $_SESSION['__OLD']['cpf'] : null;?>">
                             </div>
                             <button type="submit" class="btn btn-primary">Send</button>
                         </form>

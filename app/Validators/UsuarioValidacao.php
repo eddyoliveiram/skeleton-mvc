@@ -7,8 +7,8 @@ class UsuarioValidacao extends Validator {
 
     protected function rules() {
         return [
-            'name' => ['required'],
-            'email' => ['required', 'email'],
+            'nome' => ['required'],
+            'cpf' => ['numeric']
         ];
     }
 
