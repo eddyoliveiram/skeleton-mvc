@@ -17,6 +17,9 @@
       "ext-pdo": "*"
     },
     "autoload": {
+        "files": [
+            "app/Core/Basic/Helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/"
         },

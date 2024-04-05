@@ -23,9 +23,9 @@ class IndexController extends Controller
     {
 //        echo '<pre>';print_r($this->usuarioModel->countAll());die();
 
-        $paginationService = new PaginationService($this->userRepository);
-        $paginationService->paginate('users', 5);
-        $this->view('index');
+//        $paginationService = new PaginationService($this->userRepository);
+//        $paginationService->paginate('users', 5);
+        return view('index');
     }
 
     public function store()

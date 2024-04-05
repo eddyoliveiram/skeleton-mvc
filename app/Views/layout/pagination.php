@@ -7,7 +7,7 @@ if(isset($_SESSION['__PAGINATION']['totalPages'])):
     $conditionLimitNum = ($currentPage + $range) + 1;
 
     if ($totalPages > 1): ?>
-        <nav>
+        <nav style="background-color: white">
             <ul class="pagination justify-content-center">
                 <?php if ($currentPage > 1): ?>
                     <li class="page-item"><a class="page-link" href="?page=1">Primeira</a></li>

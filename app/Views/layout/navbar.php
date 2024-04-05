@@ -1,63 +1,26 @@
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light mt6" style="border:1px solid lightgray; border-radius: 6px; background-color: #f2f2f2 !important;">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="<?=PUBLIC_PATH;?>/index/index">Index <span class="sr-only">(current)</span></a>
+        <ul class="navbar-nav mr-auto" style="font-size: 16px">
+            <li class="nav-item">
+                <a class="nav-link" href="<?= PUBLIC_PATH ?>/projetos/index">Projetos <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?=PUBLIC_PATH;?>/about/index">About</a>
+                <a class="nav-link" href="<?= PUBLIC_PATH ?>/rubricas/index">Rubricas</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
-<!--        <form class="form-inline my-2 my-lg-0">-->
-<!--            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">-->
-<!--                Last Query-->
-<!--            </button>-->
-<!--            -->
-<!--            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">-->
-<!--                <div class="modal-dialog" role="document">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-header">-->
-<!--                            <h5 class="modal-title" id="exampleModalLongTitle">Last Query</h5>-->
-<!--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                                <span aria-hidden="true">&times;</span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-<!--                            --><?//
-//                            if (isset($_SESSION['__LAST_QUERIES'])) {
-//                                foreach ($_SESSION['__LAST_QUERIES'] as $query) {
-//                                    echo $query . "<br>";
-//                                }
-//                            }
-//                            ?>
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                            <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
+<!--            <li class="nav-item dropdown">-->
+<!--                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                    Dropdown-->
+<!--                </a>-->
+<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                    <a class="dropdown-item" href="#">Action</a>-->
+<!--                    <a class="dropdown-item" href="#">Another action</a>-->
+<!--                    <div class="dropdown-divider"></div>-->
+<!--                    <a class="dropdown-item" href="#">Something else here</a>-->
 <!--                </div>-->
-<!--            </div>-->
-        </form>
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link disabled" href="#">Disabled</a>-->
+<!--            </li>-->
+        </ul>
     </div>
 </nav>

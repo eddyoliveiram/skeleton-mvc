@@ -73,6 +73,17 @@ abstract class Model {
         return $this->db->single();
     }
 
+    final public function rawQuery($rawQuery) {
+        $this->db->query($rawQuery);
+        return $this->db->resultSet();
+    }
+
+    final public function all() {
+        $query = "SELECT * FROM $this->table";
+        $this->db->query($query);
+        return $this->db->resultSet();
+    }
+
     final public function first() {
         $query = (!$this->db instanceof OracleConnection) ? $this->getFirstDefault() : $this->getFirstOracle();
         $this->db->query($query);

@@ -35,7 +35,7 @@
         <?php echo ($message); ?>
     </div>
     <div class="error-details">
-        <p>Something went wrong.</p>
+<!--        <p>Houve um erro.</p>-->
     </div>
 </div>
 </body>

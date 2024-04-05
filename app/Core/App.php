@@ -22,9 +22,10 @@ class App {
             unset($url[0]);
         }else {
             if($url[0] == ''){
-                $msg = "No <b style='color: #e67300;'>{ Controller }</b> was provided in the url.";
+                $msg = "App\Controllers\<b style='color: #e67300;'>null</b><BR><BR>"
+                    ."O <b style='color: #e67300;'>controller</b> está vazio na url.";
             }else{
-                $msg = "<b style='color: #e67300;'>{$controllerName}</b> was not found";
+                $msg = "O controller <b style='color: #e67300;'>{$controllerName}</b> não foi encontrado.";
             }
             $this->loadError($msg);
         }
@@ -38,12 +39,13 @@ class App {
                 unset($url[1]);
             }
         }else {
-            $msg = "No<b style='color: #e67300;'> { Method }</b> was not provided in the url.";
+            $msg = $controllerClassName."\<b style='color: #e67300;'>null</b><BR><BR>"
+            ."O <b style='color: #e67300;'>método</b> está vazio na url.";
             $this->loadError($msg);
         }
 
         if($this->method == ''){
-            $msg = "The method <b style='color: #e67300;'>{$url[1]}()</b> was not found in  <b style='color: #e67300;'>{$controllerName}</b>.";
+            $msg = "O método <b style='color: #e67300;'>{$url[1]}()</b> não foi encontrado em  <b style='color: #e67300;'>{$controllerName}</b>.";
             $this->loadError($msg);
         }
         $this->params = $url ? array_values($url) : [];
@@ -54,7 +56,7 @@ class App {
         $public_path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
         $pathParts = explode('/', $_SERVER['PHP_SELF'], -1);
         $rootFolder = $pathParts[1];
-        $view_path = __DIR__.'/../views';
+        $view_path = __DIR__.'/../Views';
         $core_path = __DIR__.'/../Core';
 
         define('ROOT_FOLDER', $rootFolder);
@@ -79,16 +81,26 @@ class App {
 
     private function loadError($message) {
 //        require_once '../views/errors/error_url.php';
-        include CORE_PATH.'/Notifications/Errors/error_url.php';
+        include CORE_PATH.'/Notifications/Errors/error_not_found.php';
         die();
     }
 
     private function ExceptionHandler($boolean)
     {
         if($boolean) {
+
+            set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+                if ($errno === E_NOTICE && strpos($errstr, 'Array to string conversion') !== false) {
+                    $showDetails = true;
+                    $errorMessage = $errstr;
+                    $errorFile = $errfile;
+                    $errorLine = $errline;
+                    include CORE_PATH.'/Notifications/Errors/error_notice.php';
+                }
+            });
+
             set_exception_handler(function ($exception) {
                 $isDevEnv = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
-
                 $errorMessage = $exception->getMessage();
                 $errorFile = $exception->getFile();
                 $errorLine = $exception->getLine();
@@ -96,6 +108,7 @@ class App {
                 include CORE_PATH.'/Notifications/Errors/error_exception.php';
                 exit;
             });
+
         }
     }
 

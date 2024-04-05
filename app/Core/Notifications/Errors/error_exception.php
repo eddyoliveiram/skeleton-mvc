@@ -12,10 +12,10 @@
     </style>
 </head>
 <body>
-    <div class="error-container">
+    <div class="error-container" style="color: #4d4d4d">
         <h1>Erro ao Processar a Solicitação</h1>
         <?php if ($showDetails): ?>
-            <div class="details" style="border: 1px solid black; padding: 15px">
+            <div class="details" style="border: 2px solid gray; padding: 15px; border-radius: 20px">
                 <div><strong>Mensagem de Erro:</strong> <?= htmlspecialchars($errorMessage); ?></div>
                 <div><strong>Arquivo:</strong> <?= htmlspecialchars($errorFile); ?></div>
                 <div><strong>Linha:</strong> <?= htmlspecialchars($errorLine); ?></div>

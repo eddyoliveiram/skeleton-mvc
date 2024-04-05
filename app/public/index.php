@@ -8,7 +8,6 @@ require_once __DIR__.'/../../vendor/autoload.php';
 $conexao = new Conexao(); //composer.json
 $_SESSION['__BANCO_INTRANET'] = $conexao->banco;
 use App\core\App;
-
 //echo '<pre>';print_r($_SESSION);die();
 $app = new App();
 
