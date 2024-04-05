@@ -1,7 +1,7 @@
 <?php
-if(isset($_SESSION['__PAGINATION']['totalPages'])):
-    $totalPages = $_SESSION['__PAGINATION']['totalPages'];
-    $currentPage = $_SESSION['__PAGINATION']['currentPage'];
+if(isset($__registrosPaginados)):
+    $totalPages = $__totalPaginas;
+    $currentPage = $__paginaAtual;
     $range = 3; // Número de páginas ao redor da página atual a serem exibidas
     $initialNum = $currentPage - $range;
     $conditionLimitNum = ($currentPage + $range) + 1;

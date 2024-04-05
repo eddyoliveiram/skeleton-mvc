@@ -1,36 +1,30 @@
 <?php
 namespace App\Services;
 
-use App\Contracts\DataRepositoryInterface;
+use App\Core\Basic\Model;
 
 class PaginationService
 {
-    protected $repository;
+    protected $model;
 
-    public function __construct(DataRepositoryInterface $repository)
+    public function __construct(Model $model)
     {
-        $this->repository = $repository;
+        $this->model = $model;
     }
 
-    public function paginate($variableName = 'data', $itemsPerPage = 10)
+    public function paginate($itemsPerPage = 9)
     {
         $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
         $page = max($page, 1);
 
-        $data = $this->repository->getAll($page, $itemsPerPage);
-        $totalUsers = $this->repository->countAll();
+        $data = $this->model->paginateAll($page, $itemsPerPage);
+        $totalUsers = $this->model->countAll();
         $totalPages = ceil($totalUsers / $itemsPerPage);
 
-        $_SESSION['__PAGINATION'] = [
-            $variableName => $data,
-            'totalPages' => $totalPages,
-            'currentPage' => $page,
-        ];
-
         return [
-            $variableName => $data,
-            'totalPages' => $totalPages,
-            'currentPage' => $page,
+            '__registrosPaginados' => $data,
+            '__totalPaginas' => $totalPages,
+            '__paginaAtual' => $page,
         ];
     }
 }

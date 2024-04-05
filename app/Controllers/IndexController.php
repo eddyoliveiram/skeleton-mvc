@@ -23,8 +23,8 @@ class IndexController extends Controller
     {
 //        echo '<pre>';print_r($this->usuarioModel->countAll());die();
 
-//        $paginationService = new PaginationService($this->userRepository);
-//        $paginationService->paginate('users', 5);
+        $paginationService = new PaginationService($this->usuarioModel);
+        $paginationService->paginate('users', 5);
         return view('index');
     }
 

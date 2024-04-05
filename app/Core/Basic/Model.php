@@ -104,21 +104,15 @@ abstract class Model {
         return $this->db->single()['count'];
     }
 
-    final public function allPaginated($page = 1, $itemsPerPage = 15, $orderColumn = null, $orderDirection = 'ASC') {
-        $orderClause = "";
-        if ($orderColumn) {
-            $orderDirection = strtoupper($orderDirection) === 'ASC' ? 'ASC' : 'DESC';
-            $orderClause = "ORDER BY $orderColumn $orderDirection";
-        }
-
+    final public function paginateAll($page = 1, $itemsPerPage = 15) {
         $query = $this->db->getPaginationQuery($this->table, $page, $itemsPerPage);
-
         $this->db->query($query);
         $this->db->bind(':start', ($page - 1) * $itemsPerPage, \PDO::PARAM_INT);
         $this->db->bind(':itemsPerPage', $itemsPerPage, \PDO::PARAM_INT);
 
         return $this->db->resultSet();
     }
+
 
 }
 ?>

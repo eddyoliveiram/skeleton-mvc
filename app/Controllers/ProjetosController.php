@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Core\Basic\Controller;
 use App\Models\ProjetoModel;
+use App\Services\PaginationService;
 
 class ProjetosController extends Controller
 {
@@ -11,14 +12,14 @@ class ProjetosController extends Controller
     public function index()
     {
         $projeto = new ProjetoModel();
-        $projetos = $projeto->all();
-//        return redirect('projetos/store');
-        return view('banco-de-projetos/index', $projetos);
+        $service = new PaginationService($projeto);
+        $result = $service->paginate(10);
+        return view('banco-de-projetos/index', $result);
     }
 
     public function store()
     {
-        echo 'aqui';
+
     }
 
     public function show()

@@ -9,7 +9,7 @@
                     </a>
                 </div>
                 <div class="p-2">
-                    <a class="navbar-brand"> <img src="../../../includes/images/brasao5.png" width="80" height="60"> </a>
+                    <a class="navbar-brand"> <img src="<?=PUBLIC_PATH.'/images/brasao.png';?>" width="80" height="60"> </a>
                 </div>
             </div>
         </div>
@@ -37,12 +37,11 @@ function mostrarBannerBancoAtual() {
 
         echo "<div align='center' 
             style='padding: 2px; z-index: 9999;
-            color:white;
+            color:".$color.";
             position: fixed;
             left: 50%;
             padding: 2px 14px 2px 14px;
             transform: translateX(-50%);
-            background-color: " . $color . ";
             font-weight: bold;
             font-family: arial !important;
 			font-size:12px;

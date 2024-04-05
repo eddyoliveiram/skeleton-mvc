@@ -13,8 +13,12 @@
         <?php require_once VIEW_PATH.'/layout/header.php'; ?>
         <?php require_once VIEW_PATH.'/layout/navbar.php'; ?>
         <?php require_once VIEW_PATH.'/layout/validator-message.php';  ?>
-        <div class="card mt6">
-            <h5 class="card-header">Projetos</h5>
+        <div class="card mt8" style="box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.2);">
+            <h5 class="card-header text-center">
+                Percurso de Aprofundamento e Integração de Estudos | Configuração Cadastro de Projetos
+                <hr style="background-color: white">
+                Projetos
+            </h5>
             <div class="card-body">
                 <h5 class="card-title">
                 </h5>
@@ -29,8 +33,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?if(isset($_SESSION['__PAGINATION']['users']))
-                            foreach ($_SESSION['__PAGINATION']['users'] as $user){?>
+                        <?if(isset($__registrosPaginados))
+                            foreach ($__registrosPaginados as $user){?>
                                 <tr>
                                     <td><?=$user['cd_inscricao']?></td>
                                     <td><?=$user['nome']?></td>
@@ -51,6 +55,7 @@
             <small style="margin: 0 auto;">Copyright &copy; Secretaria de Estado de Educa&ccedil;&atilde;o - PAR&Aacute;. Todos os direitos reservados.</small>
         </div>
         <BR>
+
     </div>
 </body>
 </html>

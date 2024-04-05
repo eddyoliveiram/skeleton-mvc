@@ -117,6 +117,30 @@ legend.scheduler-border {
     background-color: #5c7cb1;
     margin-top: -16px;
 }
+.custom-navbar {
+    background-color: #e6e6e6;
+    padding: 10px 20px;
+    border: 1px solid #bfbfbf;
+    border-radius: 5px;
+    font-weight: bold;
+
+}
+.custom-nav-item {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.custom-nav-item a {
+    text-decoration: none;
+    color: #4b699b;
+    padding: 12px;
+    transition: background-color 0.5s ease;
+}
+
+.custom-nav-item a:hover {
+    background-color: #bfbfbf;
+}
+
 .mt4{
     margin-top: 4px;
 }
