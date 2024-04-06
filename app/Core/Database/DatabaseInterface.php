@@ -11,5 +11,4 @@ interface DatabaseInterface {
     public function resultSet();
     public static function getInstance();
 
-    public function getPaginationQuery($table, $page, $itemsPerPage);
 }

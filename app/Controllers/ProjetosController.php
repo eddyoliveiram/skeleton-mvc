@@ -12,9 +12,13 @@ class ProjetosController extends Controller
     public function index()
     {
         $projeto = new ProjetoModel();
-        $service = new PaginationService($projeto);
-        $result = $service->paginate(10);
-        return view('banco-de-projetos/index', $result);
+//        dd($projeto->somente15());
+        $users = $projeto->paginarTodos(10);
+        $paginacao = $projeto->getPaginacao();
+
+        return view('banco-de-projetos/index',
+            ['paginacao' => $paginacao, 'users' =>  $users ]
+        );
     }
 
     public function store()

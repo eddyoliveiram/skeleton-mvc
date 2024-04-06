@@ -8,6 +8,7 @@ use PDO;
 abstract class Model {
     protected $db;
     protected $table;
+    protected $paginacao;
 
     public function __construct(DatabaseInterface $db, $table = null) {
         $this->db = $db;
@@ -90,6 +91,12 @@ abstract class Model {
         return $this->db->single();
     }
 
+    public function last() {
+        $query = "SELECT * FROM $this->table ORDER BY 1 DESC LIMIT 1;";
+        $this->db->query($query);
+        return $this->db->single();
+    }
+
     protected function getFirstDefault() {
         return "SELECT * FROM $this->table LIMIT 1;";
     }
@@ -98,14 +105,58 @@ abstract class Model {
         return "SELECT * FROM (SELECT * FROM $this->table) WHERE ROWNUM = 5";
     }
 
+    protected function contarRegistrosDaQuery($query)
+    {
+        $countQuery = "SELECT COUNT(*) as total FROM ($query) as __subquery";
+        $this->db->query($countQuery);
+        return $this->db->single()['total'];
+    }
 
-    final public function countAll() {
+    public function paginarQuery($query, $itemsPerPage = 10)
+    {
+
+        $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
+        $page = max($page, 1);
+
+        $start = ($page - 1) * $itemsPerPage;
+        $totalRows = $this->contarRegistrosDaQuery($query);
+
+        $query .= " LIMIT :itemsPerPage OFFSET :start";
+        $this->db->query($query);
+        $this->db->bind(':start', $start, \PDO::PARAM_INT);
+        $this->db->bind(':itemsPerPage', $itemsPerPage, \PDO::PARAM_INT);
+
+        $data = $this->db->resultSet();
+
+        $totalPages = ceil($totalRows / $itemsPerPage);
+
+        $this->paginacao = ['__totalPaginas' => $totalPages, '__paginaAtual' => $page];
+
+        return $data;
+    }
+
+
+    final public function contarTodos() {
         $this->db->query("SELECT COUNT(*) as count FROM $this->table");
         return $this->db->single()['count'];
     }
 
-    final public function paginateAll($page = 1, $itemsPerPage = 15) {
-        $query = $this->db->getPaginationQuery($this->table, $page, $itemsPerPage);
+
+    public function paginarTodos($itemsPerPage = 10)
+    {
+        $query = "SELECT * FROM $this->table";
+
+        $totalRows = $this->contarRegistrosDaQuery($query);
+
+        $query .= " LIMIT :itemsPerPage OFFSET :start";
+
+        $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
+        $page = max($page, 1);
+
+        $totalPages = ceil($totalRows / $itemsPerPage);
+
+        $this->paginacao = ['__totalPaginas' => $totalPages, '__paginaAtual' => $page];
+
         $this->db->query($query);
         $this->db->bind(':start', ($page - 1) * $itemsPerPage, \PDO::PARAM_INT);
         $this->db->bind(':itemsPerPage', $itemsPerPage, \PDO::PARAM_INT);
@@ -113,6 +164,9 @@ abstract class Model {
         return $this->db->resultSet();
     }
 
-
+    public function getPaginacao()
+    {
+        return $this->paginacao;
+    }
 }
 ?>

@@ -73,10 +73,4 @@ class MySQLConnection implements DatabaseInterface {
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getPaginationQuery($table, $page, $itemsPerPage)
-    {
-        $start = ($page - 1) * $itemsPerPage;
-        $query = "SELECT * FROM $table LIMIT :start, :itemsPerPage";
-        return $query;
-    }
 }

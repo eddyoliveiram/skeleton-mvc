@@ -80,8 +80,4 @@ class PostgreSQLConnection implements DatabaseInterface {
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getPaginationQuery($table, $page, $itemsPerPage) {
-        $start = ($page - 1) * $itemsPerPage;
-        return "SELECT * FROM $table LIMIT :itemsPerPage OFFSET :start";
-    }
 }

@@ -1,5 +1,6 @@
 <?php
-//echo '<pre>';print_r($dados);echo '</pre>';
+//echo '<pre>';print_r($users);echo '</pre>';
+//dd($paginacao,false);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -33,8 +34,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?if(isset($__registrosPaginados))
-                            foreach ($__registrosPaginados as $user){?>
+                        <?if(isset($users))
+                            foreach ($users as $user){?>
                                 <tr>
                                     <td><?=$user['cd_inscricao']?></td>
                                     <td><?=$user['nome']?></td>
