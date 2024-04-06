@@ -1,17 +1,11 @@
-/*@import url(https://fonts.googleapis.com/css?family=Open+Sans);*/
-/*@import url(https://fonts.googleapis.com/css?family=Bree+Serif);*/
+
 body {
     font-family: 'Open Sans', sans-serif;
     height: 100%;
 }
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bree Serif', serif;
-}
 .content-wrap {
     flex: 1 0 auto;
 }
-/* Estiliza o rodapé */
 .footer {
     position: fixed;
     bottom: 0;

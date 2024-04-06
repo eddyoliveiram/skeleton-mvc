@@ -11,7 +11,7 @@
 <!--    </div>-->
 <!--</nav>-->
 
-<nav class="custom-navbar mt8" style="box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.2);">
+<nav class="custom-navbar mt8 borda" style="box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.2);">
         <li class="custom-nav-item"><a href="<?= PUBLIC_PATH ?>/projetos/index">Projetos</a></li>
         <li class="custom-nav-item"><a href="<?= PUBLIC_PATH ?>/rubricas/index">Rubricas</a></li>
     </ul>

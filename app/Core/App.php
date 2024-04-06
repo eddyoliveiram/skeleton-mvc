@@ -17,39 +17,15 @@ class App {
 
         $controllerName = ucfirst($url[0]) . 'Controller';
 
-        if (file_exists('../controllers/' . $controllerName . '.php')) {
-            $this->controller = $controllerName;
-            unset($url[0]);
-        }else {
-            if($url[0] == ''){
-                $msg = "App\Controllers\<b style='color: #e67300;'>null</b><BR><BR>"
-                    ."O <b style='color: #e67300;'>controller</b> está vazio na url.";
-            }else{
-                $msg = "O controller <b style='color: #e67300;'>{$controllerName}</b> não foi encontrado.";
-            }
-            $this->loadError($msg);
-        }
+        $this->checkControllerExistence($controllerName, $url);
 
-        $controllerClassName = 'App\\Controllers\\' . $this->controller;
-        $this->controller = new $controllerClassName();
+        $this->controller = $this->createControllerInstance();
 
-        if (isset($url[1])) {
-            if (method_exists($this->controller, $url[1])) {
-                $this->method = $url[1];
-                unset($url[1]);
-            }
-        }else {
-            $msg = $controllerClassName."\<b style='color: #e67300;'>null</b><BR><BR>"
-            ."O <b style='color: #e67300;'>método</b> está vazio na url.";
-            $this->loadError($msg);
-        }
+        $this->method = $this->getControllerMethod($url);
 
-        if($this->method == ''){
-            $msg = "O método <b style='color: #e67300;'>{$url[1]}()</b> não foi encontrado em  <b style='color: #e67300;'>{$controllerName}</b>.";
-            $this->loadError($msg);
-        }
         $this->params = $url ? array_values($url) : [];
-        call_user_func_array([$this->controller, $this->method], $this->params);
+
+        $this->callControllerMethod();
     }
 
     protected function setGlobals() {
@@ -83,6 +59,49 @@ class App {
 //        require_once '../views/errors/error_url.php';
         include CORE_PATH.'/Notifications/Errors/error_not_found.php';
         die();
+    }
+
+    protected function checkControllerExistence($controllerName, &$url) {
+        if (file_exists('../controllers/' . $controllerName . '.php')) {
+            $this->controller = $controllerName;
+            unset($url[0]);
+            return true;
+        } else {
+            if($url[0] == ''){
+                $msg = "App\Controllers\<b style='color: #e67300;'>null</b><BR><BR>"
+                    ."O <b style='color: #e67300;'>controller</b> está vazio na url.";
+            } else {
+                $msg = "O controller <b style='color: #e67300;'>{$controllerName}</b> não foi encontrado.";
+            }
+            $this->loadError($msg);
+            return false;
+        }
+    }
+
+    protected function createControllerInstance() {
+        $controllerClassName = 'App\\Controllers\\' . $this->controller;
+        return new $controllerClassName();
+    }
+
+    protected function getControllerMethod(&$url) {
+        if (isset($url[1])) {
+            $method = $url[1];
+            unset($url[1]);
+            return $method;
+        } else {
+            $msg = $this->controller . "\\<b style='color: #e67300;'>null</b><BR><BR>"
+                ."O <b style='color: #e67300;'>método</b> está vazio na url.";
+            $this->loadError($msg);
+        }
+    }
+
+    protected function callControllerMethod() {
+        if ($this->method && method_exists($this->controller, $this->method)) {
+            call_user_func_array([$this->controller, $this->method], $this->params);
+        } else {
+            $msg = "O método <b style='color: #e67300;'>{$this->method}()</b> não foi encontrado em  <b style='color: #e67300;'>{$this->controller}</b>.";
+            $this->loadError($msg);
+        }
     }
 
     private function ExceptionHandler($boolean)

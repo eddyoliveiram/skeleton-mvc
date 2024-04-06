@@ -1,18 +1,15 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 use App\Core\Basic\Controller;
 
-class RubricasController extends Controller
+class AdminController extends Controller
 {
-
-    public function __construct()
-    {
-
+    public function __construct(){
     }
 
     public function index()
     {
-        return view('banco-de-rubricas/index');
+        echo 'test';
     }
 
     public function store()
