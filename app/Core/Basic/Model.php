@@ -15,17 +15,17 @@ abstract class Model {
         if (!is_null($table)) {
             $this->table = $table;
         } else {
-            $this->setTableName();
+            $this->nomeTabelaAutomatico();
         }
     }
 
-    protected function setTableName() {
+    protected function nomeTabelaAutomatico() {
         $className = get_called_class();
         $className = basename(str_replace('\\', '/', $className));
         $this->table = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', str_replace('Model', '', $className))) . 's';
     }
 
-    final public function insert($data) {
+    final public function inserir($data) {
         if (!empty($data) && is_array($data)) {
             $fields = implode(', ', array_keys($data));
             $placeholders = ':' . implode(', :', array_keys($data));
@@ -41,7 +41,7 @@ abstract class Model {
     }
 
 
-    final public function update($data, $id, $idColumn = 'id') {
+    final public function atualizar($data, $id, $idColumn = 'id') {
         if (!empty($data) && is_array($data)) {
             $setParts = [];
             foreach ($data as $key => $value) {
@@ -60,21 +60,21 @@ abstract class Model {
         }
     }
 
-    final public function delete($id, $idColumn = 'id') {
+    final public function deletar($id, $idColumn = 'id') {
         $query = "DELETE FROM $this->table WHERE $idColumn = :id";
         $this->db->query($query);
         $this->db->bind(':id', $id, PDO::PARAM_INT);
         return $this->db->execute() ? true : false;
     }
 
-    final public function show($id, $idColumn = 'id') {
+    final public function mostrar($id, $idColumn = 'id') {
         $query = "SELECT * FROM $this->table WHERE $idColumn = :id";
         $this->db->query($query);
         $this->db->bind(':id', $id, PDO::PARAM_INT);
         return $this->db->single();
     }
 
-    final public function rawQuery($rawQuery) {
+    final public function query($rawQuery) {
         $this->db->query($rawQuery);
         return $this->db->resultSet();
     }

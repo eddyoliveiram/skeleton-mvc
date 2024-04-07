@@ -12,7 +12,7 @@ class PaginationService
         $this->model = $model;
     }
 
-    public function paginate($itemsPerPage = 9)
+    public function paginar($itemsPerPage = 9)
     {
         $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
         $page = max($page, 1);

@@ -16,18 +16,18 @@ class ProjetosController extends Controller
     public function index()
     {
         $projeto = new ProjetoModel();
-        $query_crua = "SELECT * FROM USERS WHERE SEXO LIKE 'F' AND IDADE >= 18";
-//        $users2 = $projeto->paginarQuery($query_crua,10);
+        $query_crua = "SELECT * FROM projetos.fee_inscritos order by cd_inscricao DESC";
+        $users2 = $projeto->paginarQuery($query_crua,10);
 
         $users = $projeto->paginarTodos(10);
         $paginacao = $projeto->getPaginacao();
 
         return view('banco-de-projetos/index',
-            ['paginacao' => $paginacao, 'users' =>  $users ]
+            ['paginacao' => $paginacao, 'users' =>  $users2 ]
         );
     }
 
-    public function store()
+    public function inserir()
     {
         $user = new UsuarioModel();
         $validator = new ProjetosValidacao($_REQUEST);
@@ -36,32 +36,24 @@ class ProjetosController extends Controller
             return redirect('projetos/index')->error($validator->getErrors());
         }
 
-        $user->insert($validator->getValidated());
+        $user->inserir($validator->getValidated());
         return redirect('projetos/index')->success('Usuário criado com sucesso.');
     }
 
-    public function show()
+    public function mostrar()
     {
 
     }
 
-    public function update()
+    public function atualizar()
     {
 
-    }
-
-    public function delete()
-    {
-        $user = new UsuarioModel();
-        $user->delete($_POST['id'], 'cd_inscricao');
-
-        return redirect('projetos/index')->success('Usuário deletado com sucesso.');
     }
 
     public function deletar()
     {
         $user = new UsuarioModel();
-        $user->delete($_POST['id'], 'cd_inscricao');
+        $user->deletar($_POST['id'], 'cd_inscricao');
 
         return redirect('projetos/index')->success('Usuário deletado com sucesso.');
     }

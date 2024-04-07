@@ -23,8 +23,8 @@ class IndexController extends Controller
     {
 //        echo '<pre>';print_r($this->usuarioModel->countAll());die();
 
-        $paginationService = new PaginationService($this->usuarioModel);
-        $paginationService->paginate('users', 5);
+//        $paginationService = new PaginationService($this->usuarioModel);
+//        $paginationService->paginate('users', 5);
         return view('index');
     }
 
@@ -34,7 +34,7 @@ class IndexController extends Controller
         $validator = new UsuarioValidacao($_REQUEST);
 
         if ($validator->validate()){
-            $user->insert($validator->getValidated());
+            $user->inserir($validator->getValidated());
         }
     }
 
