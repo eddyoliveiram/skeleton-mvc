@@ -29,8 +29,8 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Token</th>
-                            <th>Email</th>
+                            <th>Data de Nascimento</th>
+                            <th>Ações</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,13 +40,40 @@
                                     <td><?=$user['cd_inscricao']?></td>
                                     <td><?=$user['nome']?></td>
                                     <td><?=$user['dt_nascimento']?></td>
-                                    <td><?=$user['rg']?></td>
+                                    <td>
+                                        <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/delete" >
+                                            <input type="hidden" name="id" value="<?=$user['cd_inscricao']?>">
+                                            <button type="submit" class="btn btn-danger">Excluir</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             <? }?>
                         </tbody>
                     </table>
                 </p>
                 <?php require_once VIEW_PATH.'/layout/pagination.php';  ?>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Form</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/store">
+                                <div class="form-group">
+                                    <label for="nome">Name:</label>
+                                    <input type="text" class="form-control" id="nome" name="nome" value="<?=isset($_SESSION['__OLD']['nome'])? $_SESSION['__OLD']['nome'] : null;?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dt_nascimento">Data:</label>
+                                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" value="<?=isset($_SESSION['__OLD']['cpf'])? $_SESSION['__OLD']['cpf'] : null;?>">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -30,10 +30,7 @@ class RubricasController extends Controller
 
     }
 
-    public function delete()
-    {
 
-    }
 
 }
 ?>

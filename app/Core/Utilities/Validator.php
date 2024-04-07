@@ -4,6 +4,7 @@ namespace App\Core\Utilities;
 class Validator {
     protected $data = [];
     protected $validated = [];
+    protected $errors = [];
 
     public function __construct($data) {
         $this->data = $data;
@@ -30,9 +31,9 @@ class Validator {
         return $this->validated;
     }
 
-    protected function required($attribute) {
+    protected function obrigatorio($attribute) {
         if (empty($this->data[$attribute])) {
-            $this->addErrorMessage("{$attribute} é obrigatório.");
+            $this->addError("{$attribute} é obrigatório.");
             return false;
         }
         return true;
@@ -40,32 +41,54 @@ class Validator {
 
     protected function email($attribute) {
         if (!filter_var($this->data[$attribute], FILTER_VALIDATE_EMAIL)) {
-            $this->addErrorMessage("{$attribute} precisa ser um email válido.");
+            $this->addError("{$attribute} precisa ser um email válido.");
             return false;
         }
         return true;
     }
 
-    protected function nullable($attribute) {
+    protected function opcional($attribute) {
         return true;
     }
 
-    protected function numeric($attribute) {
+    protected function numerico($attribute) {
         if (isset($this->data[$attribute]) && !is_numeric($this->data[$attribute])) {
-            $this->addErrorMessage("{$attribute} precisa ser numérico.");
+            $this->addError("{$attribute} precisa ser numérico.");
             return false;
         }
         return true;
     }
 
-    public function addErrorMessage($message) {
-        if (!isset($_SESSION['__ERRORS'])) {
-            $_SESSION['__ERRORS'] = [];
+    protected function data($attribute) {
+        if (isset($this->data[$attribute])) {
+            $date = $this->data[$attribute];
+            if (!strtotime($date)) {
+                $this->addError("{$attribute} precisa ser uma data válida.");
+                return false;
+            }
         }
-        $_SESSION['__ERRORS'][] = ucfirst($message);
+        return true;
     }
 
-    public function addSuccessMessage($message) {
+    protected function arquivo($attribute) {
+        if (isset($this->data[$attribute]) && !is_file($this->data[$attribute])) {
+            $this->addError("{$attribute} precisa ser um arquivo.");
+            return false;
+        }
+        return true;
+    }
+
+
+    public function addError($message) {
+        $this->errors[] = $message;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    public function success($message) {
         $_SESSION['__SUCCESS'] = $message;
     }
 

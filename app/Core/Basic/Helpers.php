@@ -9,6 +9,9 @@
  * @param string $view O nome do arquivo da view a ser renderizado.
  * @param array $data (Opcional) Os dados a serem passados para a view.
  */
+
+use App\Core\Basic\Redirector;
+
 if (!function_exists('view')) {
     function view($view, $dados = []) {
         if(!empty($dados)){
@@ -32,13 +35,8 @@ if (!function_exists('view')) {
 }
 if (!function_exists('redirect')) {
     function redirect($url = '') {
-        if (!empty($url)) {
-            header('Location: ' . PUBLIC_PATH . '/' . $url);
-            return false;
-        } else {
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            return true;
-        }
+        $redirector = new Redirector($url);
+        return $redirector;
     }
 }
 if (!function_exists('dd')) {

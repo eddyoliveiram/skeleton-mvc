@@ -60,7 +60,7 @@ abstract class Model {
         }
     }
 
-    final public function delete($id, $id_Column = 'id') {
+    final public function delete($id, $idColumn = 'id') {
         $query = "DELETE FROM $this->table WHERE $idColumn = :id";
         $this->db->query($query);
         $this->db->bind(':id', $id, PDO::PARAM_INT);

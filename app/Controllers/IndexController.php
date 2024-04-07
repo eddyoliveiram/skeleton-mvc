@@ -35,10 +35,7 @@ class IndexController extends Controller
 
         if ($validator->validate()){
             $user->insert($validator->getValidated());
-            $validator->addSuccessMessage('Usuário criado com sucesso.');
         }
-
-        $this->redirect('index', 'index');
     }
 
 }
