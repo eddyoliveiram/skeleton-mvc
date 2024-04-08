@@ -23,7 +23,7 @@ class ProjetosController extends Controller
         $paginacao = $projeto->getPaginacao();
 
         return view('banco-de-projetos/index',
-            ['paginacao' => $paginacao, 'users' =>  $users2 ]
+            ['paginacao' => $paginacao, 'users' =>  $users2]
         );
     }
 

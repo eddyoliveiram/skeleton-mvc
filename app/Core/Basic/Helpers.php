@@ -10,6 +10,8 @@
  * @param array $data (Opcional) Os dados a serem passados para a view.
  */
 
+use App\Core\Basic\Globals;
+use App\Core\Basic\Model;
 use App\Core\Basic\Redirector;
 
 if (!function_exists('view')) {
@@ -23,6 +25,7 @@ if (!function_exists('view')) {
         $viewPath = VIEW_PATH . '/' . $view . '.php';
 
         if (file_exists($viewPath)) {
+            $model= new Model();
             require_once $viewPath;
             return true;
         } else {

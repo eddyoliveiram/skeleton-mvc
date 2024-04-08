@@ -14,6 +14,7 @@
         <?php require_once VIEW_PATH.'/layout/header.php'; ?>
         <?php require_once VIEW_PATH.'/layout/navbar.php'; ?>
         <?php require_once VIEW_PATH.'/layout/validator-message.php';  ?>
+        <?php require_once VIEW_PATH.'/layout/filtros.php';  ?>
         <div class="card mt8" style="box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.2);">
             <h5 class="card-header text-center">
                 Percurso de Aprofundamento e Integração de Estudos | Configuração Cadastro de Projetos

@@ -39,6 +39,9 @@ class App {
         define('PUBLIC_PATH', $public_path);
         define('CORE_PATH', $core_path);
         define('VIEW_PATH', $view_path);
+        define('COMPOSICOES_2022', '231,232,233,234,240');
+        define('COMPOSICOES_2023', '241,242,243,244,245');
+        define('COMPOSICOES_2024', '249,259,258,250,262,283,272');
 //        echo '<pre>';print_r($basePath. ' x '.$rootFolder.' x '.$viewPath);die();
     }
 

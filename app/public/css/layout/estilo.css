@@ -119,6 +119,18 @@ legend.scheduler-border {
     background-color: #5c7cb1;
     margin-top: -16px;
 }
+.rounded-light{
+    border-radius: 5px;
+}
+.rounded-sm{
+    border-radius: 0.125rem;
+}
+.rounded-lg{
+    border-radius: 0.5rem;
+}
+bg-white{
+    background-color: white;
+}
 .custom-navbar {
     background-color: #e6e6e6;
     padding: 10px 20px;
@@ -160,4 +172,16 @@ legend.scheduler-border {
 }
 .mb8{
     margin-top: 8px;
+}
+.h30{
+    height: 30px;
+}
+.h40{
+    height: 40px;
+}
+.h50{
+    height: 50px;
+}
+.h60{
+    height: 60px;
 }

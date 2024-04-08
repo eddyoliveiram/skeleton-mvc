@@ -3,15 +3,21 @@ namespace App\Core\Basic;
 
 use App\Core\Database\DatabaseInterface;
 use App\Core\Database\OracleConnection;
+use App\Core\Database\PostgreSQLConnection;
 use PDO;
 
-abstract class Model {
+class Model {
     protected $db;
     protected $table;
     protected $paginacao;
 
-    public function __construct(DatabaseInterface $db, $table = null) {
-        $this->db = $db;
+    public function __construct(DatabaseInterface $db = null, $table = null) {
+        if($db != null){
+            $this->db = $db;
+        }else{
+           $this->db = PostgreSQLConnection::getInstance();
+        }
+
         if (!is_null($table)) {
             $this->table = $table;
         } else {
@@ -167,6 +173,49 @@ abstract class Model {
     public function getPaginacao()
     {
         return $this->paginacao;
+    }
+
+    public static function composicoes_2022()
+    {
+        return '231,232,233,234,240';
+    }
+    public static function composicoes_2023()
+    {
+        return '241,242,243,244,245';
+    }
+    public static function composicoes_2024()
+    {
+        return '249,259,258,250,262,283,272';
+    }
+
+    public function getComposicoes($ano_letivo) {
+        $sql = "
+				select distinct on (ape.composicao_ensino.comp_ensino)
+				ape.composicao_ensino.comp_ensino,
+				ape.composicao_ensino.curso,
+				ape.composicao_ensino.nivel,
+				ave.ave_matricula.ano_letivo
+			from
+				ape.composicao_ensino
+			join ape.ape_serie
+				on (ape.composicao_ensino.curso = ape.ape_serie.codigo_ape_composicao_ensino)
+			join ave.ave_matricula
+				on (ave.ave_matricula.codigo_ape_serie 	  = ape.ape_serie.codigo
+					and ave.ave_matricula.situacao_oferta = 1)
+			where true ";
+
+        if($ano_letivo <= 2022){
+            $sql .= " and ape.composicao_ensino.curso in (".self::composicoes_2022().") ";
+        }else
+            if($ano_letivo == 2023){
+                $sql .= " and ape.composicao_ensino.curso in (".self::composicoes_2023().") ";
+            }else
+                if($ano_letivo >= 2024){
+                    $sql .= " and ape.composicao_ensino.curso in (".self::composicoes_2024().") ";
+                }
+
+        $this->db->query($sql);
+        return $this->db->resultSet();
     }
 }
 ?>
