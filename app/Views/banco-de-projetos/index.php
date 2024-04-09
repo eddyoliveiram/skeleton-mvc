@@ -13,12 +13,14 @@
     <div class="container" style="background-color: #f2f2f2;">
         <?php require_once VIEW_PATH.'/layout/header.php'; ?>
         <?php require_once VIEW_PATH.'/layout/navbar.php'; ?>
-        <?php require_once VIEW_PATH.'/layout/validator-message.php';  ?>
         <?php require_once VIEW_PATH.'/layout/filtros.php';  ?>
+        <?php require_once VIEW_PATH.'/layout/validator-message.php';  ?>
+
+        <button type="button" class="btn btn-success h45" data-toggle="modal" data-target="#formModal">
+            Cadastrar Novo
+        </button>
         <div class="card mt8" style="box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.2);">
             <h5 class="card-header text-center">
-                Percurso de Aprofundamento e Integração de Estudos | Configuração Cadastro de Projetos
-                <hr style="background-color: white">
                 Projetos
             </h5>
             <div class="card-body">
@@ -54,25 +56,31 @@
                 </p>
                 <?php require_once VIEW_PATH.'/layout/pagination.php';  ?>
             </div>
-            <div class="row">
-                <div class="col-sm-6 mx-auto">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Form</h5>
-                        </div>
-                        <div class="card-body">
-                            <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/store">
-                                <div class="form-group">
-                                    <label for="nome">Name:</label>
-                                    <input type="text" class="form-control" id="nome" name="nome" value="<?=isset($_SESSION['__OLD']['nome'])? $_SESSION['__OLD']['nome'] : null;?>">
-                                </div>
-                                <div class="form-group">
-                                    <label for="dt_nascimento">Data:</label>
-                                    <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" value="<?=isset($_SESSION['__OLD']['cpf'])? $_SESSION['__OLD']['cpf'] : null;?>">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Send</button>
-                            </form>
-                        </div>
+        </div>
+
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="formModalLabel">Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/inserir">
+                            <div class="form-group">
+                                <label for="nome">Name:</label>
+                                <input type="text" class="form-control" id="nome" name="nome" value="<?=isset($_SESSION['__OLD']['nome'])? $_SESSION['__OLD']['nome'] : null;?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="dt_nascimento">Data:</label>
+                                <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" value="<?=isset($_SESSION['__OLD']['cpf'])? $_SESSION['__OLD']['cpf'] : null;?>">
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <button type="submit" class="btn btn-intranet h45 w125">Salvar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

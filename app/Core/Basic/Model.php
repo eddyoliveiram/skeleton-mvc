@@ -188,7 +188,33 @@ class Model {
         return '249,259,258,250,262,283,272';
     }
 
-    public function getComposicoes($ano_letivo) {
+    public function getComposicoesEscola($codigo_ue,$ano_letivo)
+    {
+        $sql = "
+				select distinct on (ape.composicao_ensino.comp_ensino)
+					ape.composicao_ensino.comp_ensino,
+					ape.composicao_ensino.curso,
+					ape.composicao_ensino.nivel
+				from
+					ape.composicao_ensino
+				join ape.ape_serie
+					on (ape.composicao_ensino.curso = ape.ape_serie.codigo_ape_composicao_ensino)
+				join ave.ave_matricula
+					on (ave.ave_matricula.codigo_ape_serie 	  = ape.ape_serie.codigo
+						and ave.ave_matricula.situacao_oferta = 1)
+				where
+					ave.ave_matricula.codigo_sia_unid_ensino = $codigo_ue
+					
+                    and ave.ave_matricula.ano_letivo 		 = '".$ano_letivo."'
+                    ";
+        $sql .= ($dependencia == 1) ? "
+					and ape.composicao_ensino.curso not in(8,6,183)" : "";
+
+        $this->db->query($sql);
+        return $this->db->resultSet();
+    }
+
+    public function getTodasComposicoes($ano_letivo) {
         $sql = "
 				select distinct on (ape.composicao_ensino.comp_ensino)
 				ape.composicao_ensino.comp_ensino,
@@ -214,6 +240,70 @@ class Model {
                     $sql .= " and ape.composicao_ensino.curso in (".self::composicoes_2024().") ";
                 }
 
+        $this->db->query($sql);
+        return $this->db->resultSet();
+    }
+
+    function getSerie($codigo_composicao, $ano_letivo)
+    {
+        $sql = "
+				select distinct on (s.ordem_serie)
+					(
+					case
+							when 
+								s.nome_nem is not null
+							then
+								s.nome_nem
+							else
+								s.nome
+						 end
+					)as nome,
+					s.codigo
+				from
+					ape.ape_serie s
+				inner join ave.ave_matricula
+					on (ave.ave_matricula.codigo_ape_serie 	  = s.codigo
+						and ave.ave_matricula.situacao_oferta = 1)
+				where
+					s.codigo_ape_composicao_ensino   = $codigo_composicao
+					and ave.ave_matricula.ano_letivo 			 = '".$ano_letivo."'
+				order by
+					s.ordem_serie";
+
+        $this->db->query($sql);
+        return $this->db->resultSet();
+    }
+
+    function getTurmas($codigo_ue, $codigo_serie, $ano_letivo)
+    {
+        $sql = "
+						SELECT
+							ave.ave_turma.codigo as codigo_turma,
+							CASE 
+								WHEN pap.pap_localidades.nome_localidade != '' 
+								THEN ave.ave_turma.nome||' - '||pap.pap_localidades.nome_localidade
+								ELSE ave.ave_turma.nome
+								END as turma,
+							pap.pap_localidades.nome_localidade,
+							ave.ave_turma.data_hora_fechamento as nao_fechada
+						FROM
+							ave.ave_turma
+						left join pap.pap_localidades
+							on (pap.pap_localidades.codigo_localidade = ave.ave_turma.codigo_pap_localidade)
+						where
+							ave.ave_turma.ano_letivo 			 = '".$ano_letivo."'
+							and ave.ave_turma.dt_fim is null
+							and data_hora_fechamento is not null
+							and ave.ave_turma.codigo_sia_unid_ensino = $codigo_ue
+							and ave.ave_turma.codigo_ape_serie 	  	 = $codigo_serie";
+
+        $sql .= ($codigo_turno != '') ? "
+							and ave.ave_turma.codigo_sia_turno 	  	 = '$codigo_turno'" : "";
+
+        $sql .= "
+						order by 
+							ave.ave_turma.nome";
+//        dd($sql);
         $this->db->query($sql);
         return $this->db->resultSet();
     }

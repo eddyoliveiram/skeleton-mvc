@@ -1,8 +1,6 @@
 <?php
 namespace App\Validators;
-
 use App\Core\Utilities\Validator;
-use DateTime;
 
 class ProjetosValidacao extends Validator {
 
@@ -26,5 +24,4 @@ class ProjetosValidacao extends Validator {
         return true;
     }
 }
-
 ?>

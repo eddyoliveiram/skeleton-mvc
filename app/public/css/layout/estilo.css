@@ -154,7 +154,15 @@ bg-white{
 .custom-nav-item a:hover {
     background-color: #bfbfbf;
 }
-
+.w100{
+    width: 100px;
+}
+.w125{
+    width: 125px;
+}
+.w150{
+    width: 150px;
+}
 .mt4{
     margin-top: 4px;
 }
@@ -178,6 +186,9 @@ bg-white{
 }
 .h40{
     height: 40px;
+}
+.h45{
+    height: 45px;
 }
 .h50{
     height: 50px;

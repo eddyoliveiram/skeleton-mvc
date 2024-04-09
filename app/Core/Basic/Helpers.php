@@ -1,17 +1,4 @@
 <?php
-/**
- * Renderiza uma view com os dados fornecidos.
- *
- * Esta função inclui o arquivo da view especificado e extrai os dados fornecidos
- * para torná-los disponíveis no escopo da view. Após a inclusão do arquivo da view,
- * ela retorna o conteúdo do buffer de saída como uma string.
- *
- * @param string $view O nome do arquivo da view a ser renderizado.
- * @param array $data (Opcional) Os dados a serem passados para a view.
- */
-
-use App\Core\Basic\Globals;
-use App\Core\Basic\Model;
 use App\Core\Basic\Redirector;
 
 if (!function_exists('view')) {
@@ -25,7 +12,6 @@ if (!function_exists('view')) {
         $viewPath = VIEW_PATH . '/' . $view . '.php';
 
         if (file_exists($viewPath)) {
-            $model= new Model();
             require_once $viewPath;
             return true;
         } else {
