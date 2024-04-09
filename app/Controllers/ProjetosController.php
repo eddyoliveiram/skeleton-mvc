@@ -5,6 +5,7 @@ use App\Core\Basic\Redirector;
 use App\Models\ProjetoModel;
 use App\Models\UsuarioModel;
 use App\Services\PaginationService;
+use App\Services\ProjetoService;
 use App\Validators\ProjetosValidacao;
 use App\Validators\UsuarioValidacao;
 
@@ -30,10 +31,17 @@ class ProjetosController extends Controller
     public function inserir()
     {
         $user = new UsuarioModel();
+        $projetoService = new ProjetoService();
         $validator = new ProjetosValidacao($_REQUEST);
 
-        if (!$validator->validate()){
+        if (!$validator->validarInputs()){
             return redirect('projetos/index')->error($validator->getErrors());
+        }
+
+        $boolean = $projetoService->algumaValidacaoEspecifica();
+
+        if(!$boolean){
+            return redirect('projetos/index')->error('Não irá executar pois está true.');
         }
 
         $user->inserir($validator->getValidated());
@@ -53,7 +61,11 @@ class ProjetosController extends Controller
     public function deletar()
     {
         $user = new UsuarioModel();
-        $user->deletar($_POST['id'], 'cd_inscricao');
+        $result = $user->deletar($_POST['id'], 'cd_inscricao');
+
+        if(!$result){
+            return redirect('projetos/index')->success('Não foi possível concluir esta ação.');
+        }
 
         return redirect('projetos/index')->success('Usuário deletado com sucesso.');
     }

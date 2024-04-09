@@ -1,6 +1,7 @@
 <?php
 namespace App\Validators;
 use App\Core\Utilities\Validator;
+use App\Services\ProjetoService;
 
 class ProjetosValidacao extends Validator {
 
@@ -23,5 +24,20 @@ class ProjetosValidacao extends Validator {
         }
         return true;
     }
+
+//    protected function maisUmaRegra($attribute) {
+//
+//        if (isset($this->data[$attribute])) {
+//            $dado = $this->data[$attribute];
+//            $service = new ProjetoService();
+//            $count = $service->logicaParaContarUsuarios();
+//
+//            if (false) {
+//                $this->addError("O ano deve ser igual a 2024.");
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 }
 ?>

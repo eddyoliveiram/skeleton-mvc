@@ -10,7 +10,7 @@ class Validator {
         $this->data = $data;
     }
 
-    public function validate() {
+    public function validarInputs() {
         $isValid = true;
         foreach ($this->rules() as $attribute => $rules) {
             foreach ($rules as $rule) {

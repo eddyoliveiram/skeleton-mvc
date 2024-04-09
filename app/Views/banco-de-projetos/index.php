@@ -44,7 +44,7 @@
                                     <td><?=$user['nome']?></td>
                                     <td><?=$user['dt_nascimento']?></td>
                                     <td>
-                                        <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/delete" >
+                                        <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/deletar" >
                                             <input type="hidden" name="id" value="<?=$user['cd_inscricao']?>">
                                             <button type="submit" class="btn btn-danger">Excluir</button>
                                         </form>

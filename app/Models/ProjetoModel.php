@@ -12,4 +12,15 @@ class ProjetoModel extends Model
         parent::__construct($db, $this->table);
     }
 
+    public function contarUsuarios($attr = null)
+    {
+        $this->db->query("SELECT COUNT(*) as count FROM $this->table");
+        return $this->db->single()['count'];
+    }
+
+    public function algumaQueryEspecifica()
+    {
+        return true;
+    }
+
 }
