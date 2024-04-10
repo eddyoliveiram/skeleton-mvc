@@ -50,8 +50,10 @@ class Model {
     final public function atualizar($data, $id, $idColumn = 'id') {
         if (!empty($data) && is_array($data)) {
             $setParts = [];
+            $bindValues = [];
             foreach ($data as $key => $value) {
                 $setParts[] = "$key = :$key";
+                $bindValues[":$key"] = $value;
             }
             $setClause = implode(', ', $setParts);
             $query = "UPDATE $this->table SET $setClause WHERE $idColumn = :id";
@@ -59,12 +61,42 @@ class Model {
             foreach ($data as $key => $value) {
                 $this->db->bind(':' . $key, $value);
             }
+            $bindValues[':id'] = $id;
+            // Debug: display the query with actual values
+//            dd($this->interpolateQuery($query, $bindValues));
+
             $this->db->bind(':id', $id);
             return $this->db->execute() ? true : false;
         } else {
             return false;
         }
     }
+
+
+    protected function interpolateQuery($query, $params) {
+        $keys = array();
+        $values = array();
+
+        // Build a regular expression for each parameter
+        foreach ($params as $key => $value) {
+            if (is_string($key)) {
+                $keys[] = '/'.$key.'/';
+            }
+            if (is_string($value)) {
+                $values[] = "'" . addslashes($value) . "'";
+            } else if ($value === null) {
+                $values[] = 'NULL';
+            } else if (is_array($value)) {
+                $values[] = "'" . addslashes(implode(',', $value)) . "'";
+            } else {
+                $values[] = $value;
+            }
+        }
+
+        $query = preg_replace($keys, $values, $query, 1, $count);
+        return $query;
+    }
+
 
     final public function deletar($id, $idColumn = 'id') {
         $query = "DELETE FROM $this->table WHERE $idColumn = :id";

@@ -10,13 +10,14 @@
     <?php require_once VIEW_PATH.'/layout/scripts.php';  ?>
 </head>
 <body class="bg-intranet container">
+    <input type="hidden" id="public_path" value="<?=PUBLIC_PATH;?>">
     <div class="container" style="background-color: #f2f2f2;">
         <?php require_once VIEW_PATH.'/layout/header.php'; ?>
         <?php require_once VIEW_PATH.'/layout/navbar.php'; ?>
         <?php require_once VIEW_PATH.'/layout/filtros.php';  ?>
         <?php require_once VIEW_PATH.'/layout/validator-message.php';  ?>
 
-        <button type="button" class="btn btn-success h45" data-toggle="modal" data-target="#formModal">
+        <button type="button" id="btnCadastrarNovo" class="btn btn-success h45">
             Cadastrar Novo
         </button>
         <div class="card mt8" style="box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.2);">
@@ -44,6 +45,11 @@
                                     <td><?=$user['nome']?></td>
                                     <td><?=$user['dt_nascimento']?></td>
                                     <td>
+                                        <button type="button" class="btn btn-intranet btn-edit"
+                                                data-cd-inscricao="<?=$user['cd_inscricao']?>" data-nome="<?=$user['nome']?>"
+                                                data-dt-nascimento="<?=$user['dt_nascimento']?>">
+                                            Editar
+                                        </button>
                                         <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/deletar" >
                                             <input type="hidden" name="id" value="<?=$user['cd_inscricao']?>">
                                             <button type="submit" class="btn btn-danger">Excluir</button>
@@ -68,7 +74,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="<?=PUBLIC_PATH;?>/projetos/inserir">
+                        <form id="frm" method="POST" action="<?=PUBLIC_PATH;?>/projetos/inserir">
+                            <input type="hidden" id="cd_inscricao" name="cd_inscricao">
                             <div class="form-group">
                                 <label for="nome">Name:</label>
                                 <input type="text" class="form-control" id="nome" name="nome" value="<?=isset($_SESSION['__OLD']['nome'])? $_SESSION['__OLD']['nome'] : null;?>">
@@ -94,6 +101,25 @@
         <BR>
 
     </div>
+    <script>
+        $(document).ready(function() {
+            var public_path = $("#public_path").val();
+            $('#btnCadastrarNovo').click(function() {
+                $('#cd_inscricao').val('');
+                $('#nome').val('');
+                $('#dt_nascimento').val('');
+                $("#frm").attr('action', public_path+'/projetos/inserir')
+                $('#formModal').modal('show');
+            });
+            $('.btn-edit').click(function() {
+                $('#cd_inscricao').val($(this).attr('data-cd-inscricao'));
+                $('#nome').val($(this).attr('data-nome'));
+                $('#dt_nascimento').val($(this).attr('data-dt-nascimento'));
+                $("#frm").attr('action', public_path+'/projetos/atualizar')
+                $('#formModal').modal('show');
+            });
+        });
+    </script>
 </body>
 </html>
 

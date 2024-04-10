@@ -1,13 +1,10 @@
 <?php
 namespace App\Controllers;
 use App\Core\Basic\Controller;
-use App\Core\Basic\Redirector;
 use App\Models\ProjetoModel;
 use App\Models\UsuarioModel;
-use App\Services\PaginationService;
 use App\Services\ProjetoService;
 use App\Validators\ProjetosValidacao;
-use App\Validators\UsuarioValidacao;
 
 class ProjetosController extends Controller
 {
@@ -55,7 +52,21 @@ class ProjetosController extends Controller
 
     public function atualizar()
     {
+        $user = new UsuarioModel();
+        $validator = new ProjetosValidacao($_REQUEST);
+        $id = $_REQUEST['cd_inscricao'];
 
+        if (!$validator->validarInputs()){
+            return redirect('projetos/index')->error($validator->getErrors());
+        }
+
+        $result = $user->atualizar($validator->getValidated(),$id,'cd_inscricao');
+
+        if(!$result){
+            return redirect('projetos/index')->error('Não foi possível concluir esta ação.');
+        }
+
+        return redirect('projetos/index')->success('Usuário atualizado com sucesso.');
     }
 
     public function deletar()
@@ -64,7 +75,7 @@ class ProjetosController extends Controller
         $result = $user->deletar($_POST['id'], 'cd_inscricao');
 
         if(!$result){
-            return redirect('projetos/index')->success('Não foi possível concluir esta ação.');
+            return redirect('projetos/index')->error('Não foi possível concluir esta ação.');
         }
 
         return redirect('projetos/index')->success('Usuário deletado com sucesso.');
