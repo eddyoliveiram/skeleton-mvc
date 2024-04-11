@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers;
+use App\Core\App;
 use App\Core\Basic\Controller;
 use App\Models\ProjetoModel;
 use App\Models\UsuarioModel;

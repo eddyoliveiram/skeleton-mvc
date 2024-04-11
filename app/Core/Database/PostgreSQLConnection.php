@@ -1,6 +1,7 @@
 <?php
 namespace App\Core\Database;
 
+use App\Core\App;
 use PDO;
 use PDOException;
 
@@ -22,16 +23,20 @@ class PostgreSQLConnection implements DatabaseInterface {
 
     function connect() {
 
-        $config = require __DIR__.'/../../../db_config.php';
-        $banco = $_SESSION['__BANCO_INTRANET'];
-        $postgreSQL =  $config['PostgreSQL'][$banco];
+//        $config = require __DIR__.'/../../../db_config.php';
+//        $banco = $_SESSION['__BANCO_INTRANET'];
+//        $postgreSQL =  $config['PostgreSQL'][$banco];
 
-        if (!isset($postgreSQL)) {
-            throw new \Exception("Configuração de banco de dados PostgreSQL não encontrada.");
+        $dsn = "pgsql:host=" . DB_HOST_POSTGRE . ";dbname=" . DB_NAME_POSTGRE;
+        $username = DB_USER_POSTGRE;
+        $password = DB_PASS_POSTGRE;
+
+        if (!DB_HOST_POSTGRE || !DB_NAME_POSTGRE ) {
+            throw new \Exception("Configuração de banco de dados PostgreSQL não definida.");
         }
-
         try {
-            $this->dbh = new PDO($postgreSQL['dsn'], $postgreSQL['user'], $postgreSQL['pass']);
+//            $this->dbh = new PDO($postgreSQL['dsn'], $postgreSQL['user'], $postgreSQL['pass']);
+            $this->dbh = new PDO($dsn, $username, $password);
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             throw new \Exception("Connection failed: " . $e->getMessage());

@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\ProjetoModel;
+use App\Repositories\ProjetosRepositorio;
 
 class ProjetoService
 {
     public function algumaValidacaoEspecifica()
     {
-        $projetoModel = new ProjetoModel();
-        $result = $projetoModel->algumaQueryEspecifica();
+        $projetoRepositorio = new ProjetosRepositorio();
+        $result = $projetoRepositorio->algumaQueryEspecifica();
         return $result;
     }
 }

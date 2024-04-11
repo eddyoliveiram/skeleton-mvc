@@ -6,8 +6,14 @@ class App {
     protected $controller = '';
     protected $method = '';
     protected $params = [];
+    protected $db_config = [];
 
     public function __construct() {
+
+        if (isset($_SESSION['dbConfig'])) {
+            $this->setDbConfig($_SESSION['dbConfig']);
+            unset($_SESSION['dbConfig']);
+        }
 
         $this->ExceptionHandler(TRUE);
 
@@ -28,6 +34,12 @@ class App {
         $this->callControllerMethod();
     }
 
+
+    public function setDbConfig($db_config)
+    {
+        $this->db_config = $db_config;
+    }
+
     protected function setGlobals() {
         $public_path = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
         $pathParts = explode('/', $_SERVER['PHP_SELF'], -1);
@@ -39,6 +51,10 @@ class App {
         define('PUBLIC_PATH', $public_path);
         define('CORE_PATH', $core_path);
         define('VIEW_PATH', $view_path);
+        define('DB_HOST_POSTGRE', $this->db_config['host']);
+        define('DB_USER_POSTGRE', $this->db_config['username']);
+        define('DB_PASS_POSTGRE', $this->db_config['password']);
+        define('DB_NAME_POSTGRE', $this->db_config['dbname']);
 //        echo '<pre>';print_r($basePath. ' x '.$rootFolder.' x '.$viewPath);die();
     }
 

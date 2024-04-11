@@ -1,7 +1,6 @@
 <?php
 namespace App\Validators;
 use App\Core\Utilities\Validator;
-use App\Services\ProjetoService;
 
 class ProjetosValidacao extends Validator {
 
