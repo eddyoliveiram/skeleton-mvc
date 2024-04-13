@@ -17,7 +17,7 @@
         <?php require_once VIEW_PATH.'/layout/filtros.php';  ?>
         <?php require_once VIEW_PATH.'/layout/validator-message.php';  ?>
 
-        <button type="button" id="btnCadastrarNovo" class="btn btn-success h45">
+        <button type="button" id="btnCadastrarNovo" onclick="modalCadastrar()" class="btn btn-success h45">
             Cadastrar Novo
         </button>
         <div class="card mt8" style="box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.2);">
@@ -34,7 +34,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Data de Nascimento</th>
-                            <th>Ações</th>
+                            <th class="text-center">Ações</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,7 +45,13 @@
                                     <td><?=$user['nome']?></td>
                                     <td><?=$user['dt_nascimento']?></td>
                                     <td>
-                                        <button type="button" class="btn btn-intranet btn-edit"
+                                        <div class="d-flex">
+                                            <button type="button" onclick="modalMostrar(this)" class="btn btn-secondary btn-edit mr-2"
+                                                    data-cd-inscricao="<?=$user['cd_inscricao']?>" data-nome="<?=$user['nome']?>"
+                                                    data-dt-nascimento="<?=$user['dt_nascimento']?>">
+                                                Mostrar
+                                            </button>
+                                        <button type="button" onclick="modalEditar(this)" class="btn btn-intranet btn-edit mr-2"
                                                 data-cd-inscricao="<?=$user['cd_inscricao']?>" data-nome="<?=$user['nome']?>"
                                                 data-dt-nascimento="<?=$user['dt_nascimento']?>">
                                             Editar
@@ -54,6 +60,7 @@
                                             <input type="hidden" name="id" value="<?=$user['cd_inscricao']?>">
                                             <button type="submit" class="btn btn-danger">Excluir</button>
                                         </form>
+                                        </div>
                                     </td>
                                 </tr>
                             <? }?>
@@ -85,7 +92,7 @@
                                 <input type="date" class="form-control" id="dt_nascimento" name="dt_nascimento" value="<?=isset($_SESSION['__OLD']['cpf'])? $_SESSION['__OLD']['cpf'] : null;?>">
                             </div>
                             <div class="d-flex justify-content-center align-items-center">
-                                <button type="submit" class="btn btn-intranet h45 w125">Salvar</button>
+                                <button id="btnSalvarModal" type="submit" class="btn btn-intranet h45 w125">Salvar</button>
                             </div>
                         </form>
                     </div>
@@ -103,22 +110,45 @@
     </div>
     <script>
         $(document).ready(function() {
-            var public_path = $("#public_path").val();
-            $('#btnCadastrarNovo').click(function() {
-                $('#cd_inscricao').val('');
-                $('#nome').val('');
-                $('#dt_nascimento').val('');
-                $("#frm").attr('action', public_path+'/projetos/inserir')
-                $('#formModal').modal('show');
-            });
-            $('.btn-edit').click(function() {
-                $('#cd_inscricao').val($(this).attr('data-cd-inscricao'));
-                $('#nome').val($(this).attr('data-nome'));
-                $('#dt_nascimento').val($(this).attr('data-dt-nascimento'));
-                $("#frm").attr('action', public_path+'/projetos/atualizar')
-                $('#formModal').modal('show');
-            });
+
         });
+
+        function modalCadastrar(){
+            var public_path = $("#public_path").val();
+            $('#cd_inscricao').val('');
+            $('#nome').val('').attr('disabled', false);
+            $('#dt_nascimento').val('').attr('disabled', false);
+            $("#frm").attr('action', public_path+'/projetos/inserir')
+            $('#btnSalvarModal').show();
+            $('#formModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+        function modalEditar(element){
+            var public_path = $("#public_path").val();
+            $("#frm").attr('action', public_path+'/projetos/atualizar')
+
+            $('#cd_inscricao').val($(element).attr('data-cd-inscricao'));
+            $('#nome').val($(element).attr('data-nome')).attr('disabled', false);
+            $('#dt_nascimento').val($(element).attr('data-dt-nascimento')).attr('disabled', false);
+            $('#btnSalvarModal').show();
+            $('#formModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+        function modalMostrar(element){
+            var public_path = $("#public_path").val();
+            $("#frm").attr('action', public_path+'/projetos/atualizar')
+            $('#nome').val($(element).attr('data-nome')).attr('disabled', true);
+            $('#dt_nascimento').val($(element).attr('data-dt-nascimento')).attr('disabled', true);
+            $('#btnSalvarModal').hide();
+            $('#formModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
     </script>
 </body>
 </html>
